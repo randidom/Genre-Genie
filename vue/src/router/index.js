@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Movies from '../components/MoviesComponents.vue'
 import MovieGenre from '../components/MovieSearch.vue'
+import About from '../views/AboutUs.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,13 @@ const router = new Router({
       requiresAuth: true
     }
   },
+  {path: '/about',
+  name: 'about',
+  component: About,
+  meta: {
+    requiresAuth: false
+  }
+},
   {path: '/search',
   name: 'search',
   component: MovieGenre,
