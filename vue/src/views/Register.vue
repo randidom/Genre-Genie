@@ -80,4 +80,11 @@ export default {
 label {
   margin-right: 0.5rem;
 }
+button{
+  margin-top: 5px;
+}
+h1{
+    position: relative;
+bottom:10px;
+}
 </style>
