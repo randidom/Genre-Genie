@@ -6,6 +6,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
 import Movies from '../components/MoviesComponents.vue'
+import MovieGenre from '../components/MovieSearch.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,13 @@ const router = new Router({
       requiresAuth: true
     }
   },
+  {path: '/search',
+  name: 'search',
+  component: MovieGenre,
+  meta: {
+    requiresAuth: true
+  }
+},
     {
       path: '/',
       name: 'home',
