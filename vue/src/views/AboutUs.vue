@@ -21,6 +21,8 @@ export default {
 </script>
 
 <style>
+
+
 .about {
   background: linear-gradient(135deg, #2fbaf1, #161d75); 
   text-align: center;
