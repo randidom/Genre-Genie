@@ -4,12 +4,14 @@
     <p class="about-text">
       Welcome to Cap Movies, your go-to movie destination! We specialize in curating personalized movie recommendations tailored to your unique taste. Whether you're a fan of action-packed blockbusters, heartwarming rom-coms, or mind-bending sci-fi, we've got the perfect movie for you. Join our community of movie lovers and never miss a great film again. Register now and embark on a cinematic journey like never before – your next favorite movie is just a click away.
     </p>
+
      <div class="button-container">
-      <router-link v-bind:to="{ name: 'login' }">Log In</router-link>&nbsp;|&nbsp;
-       <router-link v-bind:to="{ name: 'register' }">Register</router-link>&nbsp;|&nbsp;
+      <router-link to="/login" class="button">Log In</router-link>
+    </div>
+    <div class="button-container">
+      <router-link to="/register" class="button">Sign Up</router-link>
     </div>
   </div>
-   
 </template>
 
 <script>
@@ -28,8 +30,8 @@ export default {
   width: 80%;
   max-width: 800px;
   position: absolute;
-  top: 46%;
-  left: 26%;
+  top: 49%;
+  left: 23%;
   transform: translate(-50%, -50%);
   backdrop-filter: blur(10px);
 }
@@ -43,19 +45,22 @@ export default {
 }
 
 .button-container {
+  display: flex;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
 .button {
-  display: inline-block;
+  flex: 1;
   padding: 10px 20px;
-  background-color: #0073e6;
+  background-color: #331d80;
   color: white;
   text-decoration: none;
   border: none;
   border-radius: 5px;
-  margin-right: 10px;
   cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .button:hover {
