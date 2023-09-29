@@ -1,7 +1,12 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Genre {
+    @JsonProperty("genre_id")
     private int genreId;
+
+    @JsonProperty("name")
     private String genreName;
 
     //Constructor without ID since it will serialize with need genre's implemented

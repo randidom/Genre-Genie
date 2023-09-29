@@ -145,20 +145,20 @@ background-color: #331d80;
 
 .column {
   padding: 20px;
-  border: ;
+  
   text-align: center;
   min-height: 180px; 
 }
 
 .column1 {
   padding: 20px;
-  border: ;
+ 
   text-align: center;
   min-height: 180px; 
 }
 .column2 {
   padding: 20px;
-  border: ;
+  
   text-align: center;
   min-height: 180px; 
 }

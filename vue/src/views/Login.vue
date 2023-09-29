@@ -48,7 +48,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+            this.$router.push("/user");
           }
         })
         .catch(error => {
@@ -74,6 +74,7 @@ export default {
 }
 body{
     background-image: url("../assets/movie-background-collage.jpg");
+    background-size: 2500px 2000px;
 }
 .background{
     width: 430px;

@@ -1,14 +1,28 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDate;
+import java.util.List;
+
 public class Movie {
+
+    //This class models the movie table off the SQL database, and references JSON properties from the external API movie database
+
+    @JsonProperty("release_date")
+    private LocalDate releaseDate;
+
+    @JsonProperty("genre_ids")
+    private List<Integer> genreId;
+    @JsonProperty("id")
     private int movieId;
+
+    private String overview;
+
     private String title;
-    private String director;
-    private int releaseYear;
-    private int genreId;
-    private String plot;
-    private String actors;
-    private double averageRating;
+
+    @JsonProperty("vote_average")
+    private double voteAverage;
     private boolean isFavorite;
 
 
@@ -16,29 +30,49 @@ public class Movie {
     public Movie() {
     }
 
-
-    //Constructor without the movieId, since adding a movie will automatically serialize the id
-    public Movie(String title, String director, int releaseYear, int genreId, String plot, String actors, double averageRating, boolean isFavorite) {
-        this.title = title;
-        this.director = director;
-        this.releaseYear = releaseYear;
+    //Constructor without id since it will serialize when a new movie is created
+    public Movie( String title, LocalDate releaseDate, List<Integer> genreId, String overview, double voteAverage, boolean isFavorite) {
+        this.releaseDate = releaseDate;
         this.genreId = genreId;
-        this.plot = plot;
-        this.actors = actors;
-        this.averageRating = averageRating;
+        this.overview = overview;
+        this.title = title;
+        this.voteAverage = voteAverage;
         this.isFavorite = isFavorite;
     }
 
-    public Movie(int movieId, String title, String director, int releaseYear, int genreId, String plot, String actors, double averageRating, boolean isFavorite) {
+    public Movie(int movieId, String title, LocalDate releaseDate, List<Integer> genreId, String overview, double voteAverage, boolean isFavorite) {
+        this.releaseDate = releaseDate;
         this.movieId = movieId;
         this.title = title;
-        this.director = director;
-        this.releaseYear = releaseYear;
         this.genreId = genreId;
-        this.plot = plot;
-        this.actors = actors;
-        this.averageRating = averageRating;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
         this.isFavorite = isFavorite;
+    }
+    public Movie(int movieId, String title, LocalDate releaseDate, String overview, double voteAverage, boolean isFavorite) {
+        this.releaseDate = releaseDate;
+        this.movieId = movieId;
+        this.title = title;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
+        this.isFavorite = isFavorite;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+
+    public List<Integer> getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(List<Integer> genreId) {
+        this.genreId = genreId;
     }
 
     public int getMovieId() {
@@ -49,6 +83,15 @@ public class Movie {
         this.movieId = movieId;
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+
     public String getTitle() {
         return title;
     }
@@ -57,53 +100,15 @@ public class Movie {
         this.title = title;
     }
 
-    public String getDirector() {
-        return director;
+
+    public double getVoteAverage() {
+        return voteAverage;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
-    public int getReleaseYear() {
-        return releaseYear;
-    }
-
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-    public int getGenreId() {
-        return genreId;
-    }
-
-    public void setGenreId(int genreId) {
-        this.genreId = genreId;
-    }
-
-    public String getPlot() {
-        return plot;
-    }
-
-    public void setPlot(String plot) {
-        this.plot = plot;
-    }
-
-    public String getActors() {
-        return actors;
-    }
-
-    public void setActors(String actors) {
-        this.actors = actors;
-    }
-
-    public double getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(double averageRating) {
-        this.averageRating = averageRating;
-    }
 
     public boolean isFavorite() {
         return isFavorite;
@@ -112,19 +117,5 @@ public class Movie {
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "movieId=" + movieId +
-                ", title='" + title + '\'' +
-                ", director='" + director + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", genreId=" + genreId +
-                ", plot='" + plot + '\'' +
-                ", actors='" + actors + '\'' +
-                ", averageRating=" + averageRating +
-                ", isFavorite=" + isFavorite +
-                '}';
-    }
 }
+

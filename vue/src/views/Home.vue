@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "about",
+  name: "home",
 };
 </script>
 
@@ -31,7 +31,7 @@ export default {
   max-width: 800px;
   position: absolute;
   top: 49%;
-  left: 23%;
+  right: 23%;
   transform: translate(-50%, -50%);
   backdrop-filter: blur(10px);
 }

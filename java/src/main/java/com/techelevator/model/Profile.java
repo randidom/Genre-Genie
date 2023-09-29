@@ -1,32 +1,86 @@
 package com.techelevator.model;
 
+import java.util.List;
+
 public class Profile {
 
-    private int id;
+
+    private int profileId;
+    private int userId;
     private String name;
-    private int profileGenreId;
+    private String username;
+
+    private String genreName;
+
+    private List<Integer> genreIds;
+
+    public List<Integer> getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(List<Integer> genreIds) {
+        this.genreIds = genreIds;
+    }
+
+    public Profile(int profileId, List<Integer> genreIds) {
+        this.profileId = profileId;
+        this.genreIds = genreIds;
+    }
+
+    public String getGenreName() {
+        return genreName;
+    }
+
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
+    }
 
     //Default constructor
     public Profile() {
     }
 
-    public Profile(String name, int profileGenreId) {
+
+    public Profile(int profileId, int userId, String name, String username) {
+        this.profileId = profileId;
+        this.userId = userId;
         this.name = name;
-        this.profileGenreId = profileGenreId;
+        this.username = username;
     }
 
-    public Profile(int id, String name, int profileGenreId) {
-        this.id = id;
+    public Profile(int profileId, int userId, String name, String username, String genreName) {
+        this.profileId = profileId;
+        this.userId = userId;
         this.name = name;
-        this.profileGenreId = profileGenreId;
+        this.username = username;
+        this.genreName = genreName;
     }
 
-    public int getId() {
-        return id;
+    public Profile(int profileId, String name) {
+        this.profileId = profileId;
+        this.name = name;
+
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Profile(int profileId, int userId, String name) {
+        this.profileId = profileId;
+        this.userId = userId;
+        this.name = name;
+    }
+
+    public int getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(int profileId) {
+        this.profileId = profileId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -37,20 +91,12 @@ public class Profile {
         this.name = name;
     }
 
-    public int getProfileGenreId() {
-        return profileGenreId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setProfileGenreId(int profileGenreId) {
-        this.profileGenreId = profileGenreId;
-    }
-
-    @Override
-    public String toString() {
-        return "Profile{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", profileGenreID=" + profileGenreId +
-                '}';
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
+

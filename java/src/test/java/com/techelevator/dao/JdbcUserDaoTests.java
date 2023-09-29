@@ -14,6 +14,7 @@ public class JdbcUserDaoTests extends BaseDaoTests {
     protected static final User USER_1 = new User(1, "user1", "user1", "ROLE_USER");
     protected static final User USER_2 = new User(2, "user2", "user2", "ROLE_USER");
     private static final User USER_3 = new User(3, "user3", "user3", "ROLE_USER");
+    private  static final User USER_4 = new User(4, "user4","user4","ROLE_USER");
 
     private JdbcUserDao sut;
 
@@ -75,10 +76,11 @@ public class JdbcUserDaoTests extends BaseDaoTests {
         List<User> users = sut.findAll();
 
         Assert.assertNotNull(users);
-        Assert.assertEquals(3, users.size());
+        Assert.assertEquals(4, users.size());
         Assert.assertEquals(USER_1, users.get(0));
         Assert.assertEquals(USER_2, users.get(1));
         Assert.assertEquals(USER_3, users.get(2));
+        Assert.assertEquals(USER_4, users.get(3));
     }
 
     @Test(expected = DataIntegrityViolationException.class)
