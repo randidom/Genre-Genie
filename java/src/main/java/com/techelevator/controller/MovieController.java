@@ -112,7 +112,7 @@ public class MovieController {
     public Movie getUserFavoriteMovies() {
         return movieDao.getFavoriteMovies();
     }
-    
+
 
 
 }

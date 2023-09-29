@@ -50,6 +50,7 @@ export default {
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
+                
               this.$router.push({
                 path: '/preferences',
                 query: { registration: 'success' },
