@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(value="http://localhost:8080")
+@CrossOrigin
 @PreAuthorize("isAuthenticated()")
 public class MovieController {
 
@@ -58,6 +58,7 @@ public class MovieController {
         HttpHeaders header = new HttpHeaders();
 
         header.setBearerAuth("eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Yzk1NGEwYjE5MzlhMjM1YWVjMTBlNjdkNWNjOWI1OCIsInN1YiI6IjY1MTFlZDc0MjZkYWMxMDBlYjFiMmE0ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oLsJCB9cKnuZYVF5PzCebIJh93zXFzoHQAXc7piQSl0");
+
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity entity = new HttpEntity<>(header);
 
@@ -111,6 +112,7 @@ public class MovieController {
     public Movie getUserFavoriteMovies() {
         return movieDao.getFavoriteMovies();
     }
+    
 
 
 }
