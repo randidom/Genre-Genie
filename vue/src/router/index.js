@@ -8,6 +8,7 @@ import store from '../store/index'
 import Movies from '../components/MoviesComponents.vue'
 import MovieGenre from '../components/MovieSearch.vue'
 import About from '../views/AboutUs.vue'
+import Recommendation from '../views/YourRecommendation.vue'
 
 Vue.use(Router)
 
@@ -38,6 +39,14 @@ const router = new Router({
     requiresAuth: false
   }
 },
+{path: '/Recommendation',
+  name: 'Recommendation',
+  component: Recommendation,
+  meta: {
+    requiresAuth: true
+  }
+},
+
   {path: '/search',
   name: 'search',
   component: MovieGenre,

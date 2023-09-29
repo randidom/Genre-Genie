@@ -32,7 +32,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   background-color: rgba(207, 223, 238, 0.9);
   text-align: center;

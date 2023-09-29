@@ -3,15 +3,15 @@
     <div id="nav">
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       <router-link v-bind:to="{name: 'login'}" v-else>Login</router-link>
-      <router-link v-bind:to="{ name: 'about' }">About Us</router-link>&nbsp;&nbsp;
-      <router-link v-bind:to="{ name: 'search' }" v-if="$store.state.token != ''">Search By Genre</router-link>
-
+       <router-link v-bind:to="{ name: 'Recommendation' }" v-if="$store.state.token != ''">Recommendation</router-link>
+       <router-link v-bind:to="{ name: 'search' }" v-if="$store.state.token != ''">Search By Genre</router-link>
        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;&nbsp;
     </div>
     <router-view />
   </div>
 </template>
 <style>
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
