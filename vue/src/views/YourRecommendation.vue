@@ -85,7 +85,7 @@ export default {
   padding: 20px;
 }
 .button-container {
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center; 
   margin-top: 20px;
 }
 .button1 {
@@ -98,7 +98,7 @@ export default {
   cursor: pointer;
   border-radius: 0;
   outline: none;
-  justify-content: center; /* Center the button horizontally */
+  justify-content: center; 
 }
 .button1:hover {
   background-color: rgb(223, 190, 102);
