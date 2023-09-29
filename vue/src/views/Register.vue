@@ -1,6 +1,6 @@
 <template>
   <div id="register" class="text-center">
-    <form @submit.prevent="register">
+    <form class="form" @submit.prevent="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -77,15 +77,20 @@ export default {
 <style scoped>
 .form-input-group {
   margin-bottom: 1rem;
+  margin-top: 10px;
 }
 label {
   margin-right: 0.5rem;
+  margin-top: 5%;
 }
 button{
-  margin-top: 5px;
+  margin-top: 3px;
 }
 h1{
     position: relative;
 bottom:10px;
+top: -10px;
 }
+
+
 </style>

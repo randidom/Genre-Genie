@@ -106,7 +106,7 @@ export default {
 }
 
 .Title {
-  position: absolute;
+  position: fixed;
   text-align: left;
   margin: 20px;
   left: 20px;

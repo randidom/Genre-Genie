@@ -31,7 +31,7 @@ export default {
   max-width: 800px;
   position: absolute;
   top: 49%;
-  right: 23%;
+  left: 73%;
   transform: translate(-50%, -50%);
   backdrop-filter: blur(10px);
 }
@@ -66,4 +66,5 @@ export default {
 .button:hover {
   background-color: #0056b3;
 }
+
 </style>
