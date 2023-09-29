@@ -3,62 +3,73 @@
     <div class="Title">
       <h1> Movie Recommendations</h1>
     </div>
+    <div class="scrolling-container">
     <div class="container">
       <div class="Ultimate-grid">
-        <div class="item">
+        <div class="item" v-for="movie in movies" :key= "movie.id">
           <div class="content">
-            <h3>Add favorite</h3>
-            <br> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta inventore laudantium sapiente quam unde illum rem
+            <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" width="200"/>
+            <h3>{{movie.title}}</h3>
+            <br>{{movie.overview}}
           </div>
           <div class="button-container">
-            <button class="button1">Add Favorite</button>
+            <button class="button1" style= "margin-top: 10px;">Add Favorite</button>
           </div>
-        </div>
-        <div class="item">
-          <div class="content">
-            <h3>Add favorite</h3>
-            <br> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta inventore laudantium sapiente quam unde illum rem
-          </div>
-          <div class="button-container">
-            <button class="button2">Add Favorite</button>
-          </div>
-        </div>
-        <div class="item">
-          <div class="content">
-            <h3>Add favorite</h3>
-            <br> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Soluta inventore laudantium sapiente quam unde illum rem
-          </div>
-          <div class="button-container">
-            <button class="button3">Add Favorite</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
+import service from '../services/movieapiservice.js'
 export default {
+  data(){
+    return{
+      movies: []
+    }
+  },
+  methods: {
+    recomendations( ) {
+      service.getAllMovies ().then(response => {
+        this.movies=response.data
+      })
+    }
+  },
+  created(){
+    this.recomendations();
+  },
   name: "AddFavorite",
 };
 </script>
-
 <style scoped>
 .container {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  padding-bottom: 20px;
+  align-items: center;
+  padding:20px;
   margin: 30px;
   width: 100%;
-  height: 850px;
+  min-height: 100vh;
+  
 }
+.scrolling-container{
+  display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ height:100vh;
+
+}
+
+
 .Ultimate-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
-  max-width: 4000px;
+  max-width: 100vw;
   padding: 20px;
+  height: 60vh;
 }
 .item {
   background-color: rgba(22, 29, 117, 0.5);
@@ -68,47 +79,32 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%; 
+  height: 100%;
 }
 .content {
   padding: 20px;
 }
 .button-container {
+    justify-content: center; /* Center the button horizontally */
   margin-top: 20px;
 }
 .button1 {
-  background-color: #331D80;
+  background-color:rgb(248, 163, 5);
   width: 180px;
   color: #000;
   font-size: 12px;
   padding: 12px 0;
   border: 0;
   cursor: pointer;
-  border-radius: 9px;
+  border-radius: 0;
   outline: none;
+  justify-content: center; /* Center the button horizontally */
 }
-.button2 {
-  background-color: rgb(248, 163, 5);
-  width: 180px;
-  color: #000;
-  font-size: 12px;
-  padding: 12px 0;
-  border: 0;
-  cursor: pointer;
-  border-radius: 9px;
-  outline: none;
+.button1:hover {
+  background-color: rgb(223, 190, 102);
+
 }
-.button3 {
-  background-color: #331D80; 
-  width: 180px;
-  color: #000;
-  font-size: 12px;
-  padding: 12px 0;
-  border: 0;
-  border-radius: 9px;
-  outline: none;
-  cursor: pointer;
-}
+
 .Title {
   position: absolute;
   text-align: left;
@@ -117,4 +113,12 @@ export default {
   color: white;
   font-size: 30px;
 }
+
 </style>
+
+
+
+
+
+
+
