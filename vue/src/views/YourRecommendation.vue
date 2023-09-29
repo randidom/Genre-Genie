@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="userfirstpage">
     <div class="Title">
       <h1> Movie Recommendations</h1>
     </div>
@@ -13,7 +14,7 @@
             <br>{{movie.overview}}
           </div>
           <div class="button-container">
-            <button class="button1" style= "margin-top: 10px;">Add Favorite</button>
+            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(movie)">Add Favorite</button>
           </div>
           </div>
         </div>
@@ -24,19 +25,22 @@
 <script>
 import service from '../services/movieapiservice.js'
 export default {
-  data(){
-    return{
-      movies: []
+  data() {
+    return {
+      movies: [],
     }
   },
   methods: {
-    recomendations( ) {
-      service.getAllMovies ().then(response => {
-        this.movies=response.data
+    recomendations() {
+      service.getAllMovies().then(response => {
+        this.movies = response.data
       })
+    },
+    addToFavorites(movie) {
+      this.selectedMovies.push(movie);
     }
   },
-  created(){
+  created() {
     this.recomendations();
   },
   name: "AddFavorite",
@@ -52,13 +56,15 @@ export default {
   width: 100%;
   min-height: 100vh;
   
+  
 }
 .scrolling-container{
   display: flex;
  flex-direction: column;
  align-items: center;
  justify-content: center;
- height:100vh;
+ 
+ overflow-y: auto;
 
 }
 
@@ -69,7 +75,7 @@ export default {
   gap: 60px;
   max-width: 100vw;
   padding: 20px;
-  height: 60vh;
+  
 }
 .item {
   background-color: rgba(22, 29, 117, 0.5);
