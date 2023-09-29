@@ -7,7 +7,8 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Movies from '../components/MoviesComponents.vue'
 import MovieGenre from '../components/MovieSearch.vue'
-import About from '../views/AboutUs.vue'
+import user from '../views/UserFirstPage.vue'
+import UserPreferences from '../views/UserPreferences'
 
 Vue.use(Router)
 
@@ -31,11 +32,18 @@ const router = new Router({
       requiresAuth: true
     }
   },
-  {path: '/about',
-  name: 'about',
-  component: About,
+  {path: '/preferences',
+    name: 'preferences',
+    component: UserPreferences,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {path: '/user',
+  name: 'user',
+  component: user,
   meta: {
-    requiresAuth: false
+    requiresAuth: true
   }
 },
   {path: '/search',
