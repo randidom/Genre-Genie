@@ -38,7 +38,21 @@
 </template>
 
 <script>
+import service from '../services/movieapiservice.js'
+
 export default {
+  data(){
+    return{
+      movies: []
+    }
+  },
+  methods: {
+    recomendations( ) {
+      service.getAllMovies ().then(response => {
+        this.movies=response.data
+      })
+    }
+  },
   name: "AddFavorite",
 };
 </script>
@@ -74,10 +88,11 @@ export default {
   padding: 20px;
 }
 .button-container {
+    justify-content: center; /* Center the button horizontally */
   margin-top: 20px;
 }
 .button1 {
-  background-color: #331D80;
+  background-color:rgb(248, 163, 5);
   width: 180px;
   color: #000;
   font-size: 12px;
@@ -86,6 +101,17 @@ export default {
   cursor: pointer;
   border-radius: 9px;
   outline: none;
+  justify-content: center; /* Center the button horizontally */
+
+}
+.button1:hover {
+  background-color: rgb(223, 190, 102);
+}
+.button2:hover {
+  background-color:  rgb(223, 190, 102);
+}
+.button3:hover {
+  background-color:  rgb(223, 190, 102);
 }
 .button2 {
   background-color: rgb(248, 163, 5);
@@ -99,7 +125,7 @@ export default {
   outline: none;
 }
 .button3 {
-  background-color: #331D80; 
+  background-color: rgb(248, 163, 5); 
   width: 180px;
   color: #000;
   font-size: 12px;
