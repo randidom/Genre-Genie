@@ -13,7 +13,7 @@
             <br>{{movie.overview}}
           </div>
           <div class="button-container">
-            <button class="button1" style= "margin-top: 10px;">Add Favorite</button>
+            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(movie)">Add Favorite</button>
           </div>
           </div>
         </div>
@@ -24,19 +24,24 @@
 <script>
 import service from '../services/movieapiservice.js'
 export default {
-  data(){
-    return{
-      movies: []
+  data() {
+    return {
+      movies: [],
+      selectedMovies: [] // New data property to store selected movies
     }
   },
   methods: {
-    recomendations( ) {
-      service.getAllMovies ().then(response => {
-        this.movies=response.data
+    recomendations() {
+      service.getAllMovies().then(response => {
+        this.movies = response.data
       })
+    },
+    addToFavorites(movie) {
+      // Add the selected movie to the list of favorites
+      this.selectedMovies.push(movie);
     }
   },
-  created(){
+  created() {
     this.recomendations();
   },
   name: "AddFavorite",

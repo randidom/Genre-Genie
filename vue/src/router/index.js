@@ -11,6 +11,7 @@ import Recommendation from '../views/YourRecommendation.vue'
 import user from '../views/UserFirstPage.vue'
 import UserPreferences from '../views/UserPreferences'
 
+
 Vue.use(Router)
 
 /**
@@ -39,6 +40,7 @@ const router = new Router({
     meta: {
       requiresAuth: false
     }
+ 
   },
   {path: '/user',
   name: 'user',
