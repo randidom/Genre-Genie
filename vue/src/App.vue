@@ -4,7 +4,6 @@
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
       <router-link v-bind:to="{name: 'login'}" v-else>Login</router-link>
        <router-link v-bind:to="{ name: 'Recommendation' }" v-if="$store.state.token != ''">Recommendation</router-link>
-       <router-link v-bind:to="{ name: 'search' }" v-if="$store.state.token != ''">Search By Genre</router-link>
       <router-link v-bind:to="{ name: 'search' }" v-if="$store.state.token != ''">Search</router-link>
        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;&nbsp;
     </div>
