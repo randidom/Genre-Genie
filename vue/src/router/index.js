@@ -49,8 +49,8 @@ const router = new Router({
     requiresAuth: true
   }
 },
-{path: '/Recommendation',
-  name: 'Recommendation',
+{path: '/recommendation',
+  name: 'recommendation',
   component: Recommendation,
   meta: {
     requiresAuth: true
