@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="userfirstpage">
     <div class="Title">
       <h1> Movie Recommendations</h1>
     </div>
@@ -27,7 +28,6 @@ export default {
   data() {
     return {
       movies: [],
-      selectedMovies: [] // New data property to store selected movies
     }
   },
   methods: {
@@ -37,7 +37,6 @@ export default {
       })
     },
     addToFavorites(movie) {
-      // Add the selected movie to the list of favorites
       this.selectedMovies.push(movie);
     }
   },
@@ -57,13 +56,15 @@ export default {
   width: 100%;
   min-height: 100vh;
   
+  
 }
 .scrolling-container{
   display: flex;
  flex-direction: column;
  align-items: center;
  justify-content: center;
- height:100vh;
+ 
+ overflow-y: auto;
 
 }
 
@@ -74,7 +75,7 @@ export default {
   gap: 60px;
   max-width: 100vw;
   padding: 20px;
-  height: 60vh;
+  
 }
 .item {
   background-color: rgba(22, 29, 117, 0.5);
@@ -111,7 +112,7 @@ export default {
 }
 
 .Title {
-  position: absolute;
+  position: fixed;
   text-align: left;
   margin: 20px;
   left: 20px;

@@ -138,7 +138,7 @@ input{
 }
 
 button{
-    margin-top: 50px;
+    margin-top: 20px;
     width: 100%;
     background-color: #ffffff;
     color: #080710;
