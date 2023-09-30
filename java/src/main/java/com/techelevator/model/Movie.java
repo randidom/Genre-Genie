@@ -10,7 +10,7 @@ public class Movie {
     //This class models the movie table off the SQL database, and references JSON properties from the external API movie database
 
     @JsonProperty("release_date")
-    private LocalDate releaseDate;
+    private String releaseDate;
 
     @JsonProperty("genre_ids")
     private List<Integer> genreId;
@@ -31,7 +31,7 @@ public class Movie {
     }
 
     //Constructor without id since it will serialize when a new movie is created
-    public Movie( String title, LocalDate releaseDate, List<Integer> genreId, String overview, double voteAverage, boolean isFavorite) {
+    public Movie( String title, String releaseDate, List<Integer> genreId, String overview, double voteAverage, boolean isFavorite) {
         this.releaseDate = releaseDate;
         this.genreId = genreId;
         this.overview = overview;
@@ -40,7 +40,7 @@ public class Movie {
         this.isFavorite = isFavorite;
     }
 
-    public Movie(int movieId, String title, LocalDate releaseDate, List<Integer> genreId, String overview, double voteAverage, boolean isFavorite) {
+    public Movie(int movieId, String title, String releaseDate, List<Integer> genreId, String overview, double voteAverage, boolean isFavorite) {
         this.releaseDate = releaseDate;
         this.movieId = movieId;
         this.title = title;
@@ -49,7 +49,7 @@ public class Movie {
         this.voteAverage = voteAverage;
         this.isFavorite = isFavorite;
     }
-    public Movie(int movieId, String title, LocalDate releaseDate, String overview, double voteAverage, boolean isFavorite) {
+    public Movie(int movieId, String title, String releaseDate, String overview, double voteAverage, boolean isFavorite) {
         this.releaseDate = releaseDate;
         this.movieId = movieId;
         this.title = title;
@@ -58,11 +58,11 @@ public class Movie {
         this.isFavorite = isFavorite;
     }
 
-    public LocalDate getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 

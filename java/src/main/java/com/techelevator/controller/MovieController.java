@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class MovieController {
 
     @Autowired
@@ -99,11 +99,7 @@ public class MovieController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/favorites", method = RequestMethod.POST)
     public Movie updateMovieToFavorite(@RequestBody @Valid Movie movie) {
-        if (movie.getMovieId() != 0) {
-            return movieDao.createFavorite(movie);
-        } else {
-            return null;
-        }
+        return movieDao.createFavorite(movie);
     }
 
 

@@ -18,10 +18,10 @@ CREATE TABLE genre (
 
 
 CREATE TABLE movie (
-    movie_id SERIAL,
+    movie_id int,
     title varchar(100) NOT NULL,
-    release_date date,
-    overview varchar(500),
+    release_date varchar (80),
+    overview varchar(1000),
     vote_average numeric(3,2),
     is_favorite boolean,
     CONSTRAINT PK_movie_id PRIMARY KEY (movie_id)

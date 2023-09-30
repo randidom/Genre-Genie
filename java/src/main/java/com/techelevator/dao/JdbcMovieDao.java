@@ -142,16 +142,13 @@ public class JdbcMovieDao implements MovieDao{
     public Movie createFavorite(Movie movie) {
         Movie favoriteMovie = null;
         //This is essentially inserting the movie from the external API from the database since the user favorites it and we want to retrieve it later on
-        String sql = "INSERT INTO movie (title, release_date, overview, vote_average, is_favorite) VALUES (?,?,?,?,?) " +
-                "RETURNING movie_id";
-        int movieId = 0;
+        String sql = "INSERT INTO movie (movie_id, title, release_date, overview, vote_average, is_favorite) VALUES (?,?,?,?,?,true) RETURNING movie_id";
+                int movieId = 0;
         try {
-            movieId = jdbcTemplate.queryForObject(sql, int.class, movie.getTitle(), movie.getReleaseDate(), movie.getOverview(), movie.getVoteAverage(), movie.isFavorite());
+             movieId = jdbcTemplate.queryForObject(sql, int.class, movie.getMovieId() , movie.getTitle(), movie.getReleaseDate(), movie.getOverview(), movie.getVoteAverage());
             //Since this is creating a favorite movie, the boolean has to be true
-            System.out.println(movieId);
            if(movie.isFavorite() == true) {
-               System.out.println(movieId + "movie");
-                    favoriteMovie = getMovieById(movieId);
+                   favoriteMovie = getMovieById(movieId);
 
                }
         } catch (CannotGetJdbcConnectionException e) {
@@ -159,6 +156,7 @@ public class JdbcMovieDao implements MovieDao{
         } catch (BadSqlGrammarException e) {
             System.out.println("SQL statement isn't working");
         } catch (DataIntegrityViolationException e) {
+            e.printStackTrace();
             System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
         }
         if(movie.getGenreId() != null) {
@@ -174,7 +172,7 @@ public class JdbcMovieDao implements MovieDao{
         Movie movie = new Movie();
         int movieId = row.getInt("movie_id");
         String title = row.getString("title");
-        LocalDate releaseDate = row.getDate("release_date").toLocalDate();
+        String releaseDate = row.getString("release_date");
         String overview = row.getString("overview");
         double voteAverage = row.getDouble("vote_average");
         boolean isFavorite = row.getBoolean("is_favorite");
