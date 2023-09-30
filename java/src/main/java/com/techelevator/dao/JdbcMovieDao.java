@@ -156,7 +156,6 @@ public class JdbcMovieDao implements MovieDao{
         } catch (BadSqlGrammarException e) {
             System.out.println("SQL statement isn't working");
         } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
             System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
         }
         if(movie.getGenreId() != null) {
