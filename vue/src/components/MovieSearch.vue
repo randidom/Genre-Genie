@@ -45,8 +45,6 @@ export default {
        }
       );
     },
-    //TODO: This doesn't work and isn't adding the movie to our database
-    //Also page shouldn't refresh and go back to search when clicking favs
     addMovieToFavorites(index) {
   if (this.movies.length === 0) {
     

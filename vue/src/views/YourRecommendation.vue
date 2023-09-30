@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div class="userfirstpage">
     <div class="Title">
       <h1> Movie Recommendations</h1>
     </div>
@@ -17,7 +16,6 @@
             <button class="button1" style="margin-top: 10px;" @click="addToFavorites(movie)">Add Favorite</button>
           </div>
           </div>
-          </div>
         </div>
       </div>
     </div>
@@ -29,6 +27,7 @@ export default {
   data() {
     return {
       movies: [],
+      selectedMovies: [] // New data property to store selected movies
     }
   },
   methods: {
@@ -38,6 +37,7 @@ export default {
       })
     },
     addToFavorites(movie) {
+      // Add the selected movie to the list of favorites
       this.selectedMovies.push(movie);
     }
   },
@@ -64,8 +64,7 @@ export default {
  flex-direction: column;
  align-items: center;
  justify-content: center;
- 
- overflow-y: auto;
+ height:100vh;
 
 }
 
@@ -76,7 +75,7 @@ export default {
   gap: 60px;
   max-width: 100vw;
   padding: 20px;
-  
+  height: 60vh;
 }
 .item {
   background-color: rgba(22, 29, 117, 0.5);
@@ -113,7 +112,7 @@ export default {
 }
 
 .Title {
-  position: fixed;
+  position: absolute;
   text-align: left;
   margin: 20px;
   left: 20px;
