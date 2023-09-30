@@ -17,6 +17,7 @@
             <button class="button1" style="margin-top: 10px;" @click="addToFavorites(movie)">Add Favorite</button>
           </div>
           </div>
+          </div>
         </div>
       </div>
     </div>
