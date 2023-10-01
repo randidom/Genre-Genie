@@ -13,7 +13,9 @@
             <br>{{movie.overview}}
           </div>
           <div class="button-container">
-            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(index)">Add Favorite</button>
+            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(index)" :class="{ 'added': selectedMovies.includes(movie.id) }">
+            {{ selectedMovies.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+            </button>
           </div>
           </div>
         </div>
@@ -159,6 +161,11 @@ export default {
   left: 20px;
   color: white;
   font-size: 30px;
+}
+
+.button1.added {
+  background-color: rgb(18, 18, 49);
+  color: #fff;
 }
 
 </style>
