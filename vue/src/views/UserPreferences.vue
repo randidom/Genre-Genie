@@ -76,7 +76,7 @@ export default {
     this.errorMessage = "You can only select up to 3 genres.";
     return;
   }
-  //The method below requires a profile object 
+  //The method below requires a genre object 
   const genre = {
     userId: this.$store.state.user.id,
     genre_id: this.selectedItems.map(item => item.id) // Map selected items to genre IDs

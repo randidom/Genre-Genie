@@ -29,9 +29,8 @@ data() {
         const userId = this.$store.state.user.id
           service.getAllUserFavoriteMovies(userId).then(
               (response) => {
-                this.movies = response.data;
                  if (response.status === 201) {
-                   
+                   this.movies = response.data;    
         console.log("Movie favorites have loaded ");
       } else {
         console.log("Failed to get all favorite movies");
