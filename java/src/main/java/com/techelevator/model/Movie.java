@@ -25,6 +25,8 @@ public class Movie {
     private double voteAverage;
     private boolean isFavorite;
 
+    private int userId;
+
 
     //Default constructor for it to be easier to create a new movie
     public Movie() {
@@ -56,6 +58,24 @@ public class Movie {
         this.overview = overview;
         this.voteAverage = voteAverage;
         this.isFavorite = isFavorite;
+    }
+
+    public Movie( int movieId, String title, String releaseDate, String overview, double voteAverage, boolean isFavorite, int userId) {
+        this.releaseDate = releaseDate;
+        this.movieId = movieId;
+        this.overview = overview;
+        this.title = title;
+        this.voteAverage = voteAverage;
+        this.isFavorite = isFavorite;
+        this.userId = userId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getReleaseDate() {

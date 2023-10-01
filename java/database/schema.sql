@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, movie_genre, movie, profile_genre, genre, profile;
+DROP TABLE IF EXISTS users, movie_genre, movie, user_genre, genre;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -24,7 +24,9 @@ CREATE TABLE movie (
     overview varchar(1000),
     vote_average numeric(3,2),
     is_favorite boolean,
-    CONSTRAINT PK_movie_id PRIMARY KEY (movie_id)
+    user_id int,
+    CONSTRAINT PK_movie_id PRIMARY KEY (movie_id),
+    CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
 
 );
 
@@ -36,23 +38,11 @@ CREATE TABLE movie_genre (
 );
 
 
-CREATE TABLE profile (
-    user_id int,
-    profile_id SERIAL,
-    name varchar(50),
-    CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-    CONSTRAINT PK_profile_id PRIMARY KEY (profile_id)
-
-
-);
-
-CREATE TABLE profile_genre (
-      profile_genre_id SERIAL,
-      profile_id int NOT NULL,
+CREATE TABLE user_genre (
+      user_id int NOT NULL,
       genre_id int NOT NULL,
-      CONSTRAINT FK_profile_genre_id FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
-      CONSTRAINT FK_profile_genre_profile_id FOREIGN KEY (profile_id) REFERENCES profile(profile_id),
-      CONSTRAINT PK_profile_genre_table_id PRIMARY KEY (profile_genre_id)
+      CONSTRAINT FK_genre_id FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
+      CONSTRAINT FK_user_genre_id FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 COMMIT TRANSACTION;

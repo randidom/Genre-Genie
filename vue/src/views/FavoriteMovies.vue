@@ -26,8 +26,10 @@ data() {
   },
   methods: {
       getUserFavorite() {
-          service.getAllUserFavoriteMovies().then(
+        const userId = this.$store.state.user.id
+          service.getAllUserFavoriteMovies(userId).then(
               (response) => {
+                this.movies = response.data;
                  if (response.status === 201) {
                    
         console.log("Movie favorites have loaded ");

@@ -2,13 +2,17 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class Genre {
-    @JsonProperty("genre_id")
+    @JsonProperty("genre_ids")
     private int genreId;
 
     @JsonProperty("name")
     private String genreName;
 
+
+    private int userId;
     //Constructor without ID since it will serialize with need genre's implemented
     public Genre(String genreName) {
         this.genreName = genreName;
@@ -19,8 +23,21 @@ public class Genre {
         this.genreName = genreName;
     }
 
+    public Genre(int genreId, int userId) {
+        this.genreId = genreId;
+        this.userId = userId;
+    }
+
     //Default constructor
     public Genre() {
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getGenreId() {

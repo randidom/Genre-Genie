@@ -15,7 +15,9 @@
           <br />
           <h5>Rating: {{ movie.vote_average }} / 10</h5>
         </div>
-        <button class="favorite-button" @click.prevent="addMovieToFavorites(index)">Add as Favorite</button>
+        <button class="favorite-button" @click.prevent="addMovieToFavorites(index)" :class="{ 'added': favorites.includes(movie.id) }">
+            {{ favorites.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+    </button>
       </div>
     </div>
   </div>
@@ -29,6 +31,7 @@ export default {
       errorMessage: null,
       title: '', 
       movies: [],
+      favorites: [],
     };
   },
   methods: {
@@ -47,20 +50,32 @@ export default {
     },
     addMovieToFavorites(index) {
   if (this.movies.length === 0) {
-    
     // Handle the case where there are no movies to add as favorites.
     return;
   }
+   const movieId = this.movies[index].id;
+   // Updates the button text to "Added to Favorites", so it shows the user it has been already added
+      this.$forceUpdate(); // Force a re-render to update the button text
 
-  const movieToAdd = {
-    id: this.movies[index].id,
-    title: this.movies[index].title, 
-    release_date: this.movies[index].release_date,
-    overview: this.movies[index].overview,
-    vote_average: this.movies[index].vote_average,
-    is_favorite: true,
-  };
+  // Check if the movie ID already exists in favorites to not get an error in the backend
+  // for duplicate id's
+  if (!this.favorites.includes(movieId)) {
+    const movieToAdd = {
+      id: movieId,
+      title: this.movies[index].title,
+      release_date: this.movies[index].release_date,
+      overview: this.movies[index].overview,
+      vote_average: this.movies[index].vote_average,
+      userId: this.$store.state.user.id,
+      is_favorite: true,
+      
+      
+    };
 
+    // Add the movie to favorites array
+    this.favorites.push(movieId);
+
+ //Adds the movie info to our database
   service.createAFavoriteMovie(movieToAdd)
     .then((response) => {
       if (response.status === 201) {
@@ -81,6 +96,7 @@ export default {
       }
     });
 }
+    }
   }
 };
 </script>
@@ -177,6 +193,10 @@ export default {
 
 .favorite-button:hover {
  background-color: rgb(18, 18, 49);
+  color: #fff;
+}
+.favorite-button.added {
+  background-color: rgb(18, 18, 49);
   color: #fff;
 }
 </style>
