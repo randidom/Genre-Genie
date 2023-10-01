@@ -6,14 +6,14 @@
     <div class="scrolling-container">
     <div class="container">
       <div class="Ultimate-grid">
-        <div class="item" v-for="movie in movies" :key= "movie.id">
+        <div class="item" v-for="(movie, index) in movies" :key= "movie.id">
           <div class="content">
             <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" width="200"/>
             <h3>{{movie.title}}</h3>
             <br>{{movie.overview}}
           </div>
           <div class="button-container">
-            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(movie)">Add Favorite</button>
+            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(index)">Add Favorite</button>
           </div>
           </div>
         </div>
@@ -36,9 +36,50 @@ export default {
         this.movies = response.data
       })
     },
-    addToFavorites(movie) {
-      // Add the selected movie to the list of favorites
-      this.selectedMovies.push(movie);
+    addToFavorites(index) {
+      if (this.movies.length === 0) {
+    // Handle the case where there are no movies to add as favorites.
+    return;
+  }
+   const movieId = this.movies[index].id;
+   // Updates the button text to "Added to Favorites", so it shows the user it has been already added
+      this.$forceUpdate(); // Force a re-render to update the button text
+
+  // Check if the movie ID already exists in favorites to not get an error in the backend
+  // for duplicate id's
+  if (!this.selectedMovies.includes(movieId)) {
+    const movieToAdd = {
+      id: movieId,
+      title: this.movies[index].title,
+      release_date: this.movies[index].release_date,
+      overview: this.movies[index].overview,
+      vote_average: this.movies[index].vote_average,
+      userId: this.$store.state.user.id,
+      is_favorite: true,
+    };
+    // Add the movie to favorites array
+    this.selectedMovies.push(movieId);
+
+ //Adds the movie info to our database
+  service.createAFavoriteMovie(movieToAdd)
+    .then((response) => {
+      if (response.status === 201) {
+        // Successfully added to favorites
+        console.log("Movie added to favorites successfully");
+      } else {
+        console.log("Failed to add movie to favorites");
+      }
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error submitting favorite, response error", error.response);
+      } else if (error.request) {
+        console.error("Server error.", error.request);
+      } else {
+        console.error("An error occurred", error);
+      }
+    });
+}
     }
   },
   created() {
