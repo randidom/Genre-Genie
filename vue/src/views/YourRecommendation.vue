@@ -16,6 +16,7 @@
           <div class="button-container">
             <button class="button1" style="margin-top: 10px;" @click="addToFavorites(movie)">Add Favorite</button>
           </div>
+        </div>
           </div>
         </div>
       </div>
@@ -112,7 +113,7 @@ export default {
 }
 
 .Title {
-  position: absolute;
+  position: fixed;
   text-align: left;
   margin: 20px;
   left: 20px;

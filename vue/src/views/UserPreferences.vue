@@ -125,6 +125,8 @@ export default {
   margin-left:920px;
   margin-top: 0px;
   width: 100%; 
+  
+  
 }
 
 .select__item {
@@ -141,6 +143,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 200%;
+  
   
 }
 
