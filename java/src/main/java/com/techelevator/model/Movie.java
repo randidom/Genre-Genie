@@ -23,6 +23,16 @@ public class Movie {
     @JsonProperty("poster_path")
     private String posterPath;
 
+    private int favoriteId;
+
+    public int getFavoriteId() {
+        return favoriteId;
+    }
+
+    public void setFavoriteId(int favoriteId) {
+        this.favoriteId = favoriteId;
+    }
+
     private String title;
 
     @JsonProperty("vote_average")
@@ -89,6 +99,18 @@ public class Movie {
         this.isFavorite = isFavorite;
         this.userId = userId;
         this.posterPath = posterPath;
+    }
+
+    public Movie( int movieId, String title, String releaseDate, String overview, double voteAverage, boolean isFavorite, int userId, String posterPath, int favoriteId) {
+        this.releaseDate = releaseDate;
+        this.movieId = movieId;
+        this.overview = overview;
+        this.title = title;
+        this.voteAverage = voteAverage;
+        this.isFavorite = isFavorite;
+        this.userId = userId;
+        this.posterPath = posterPath;
+        this.favoriteId = favoriteId;
     }
 
     public int getUserId() {

@@ -92,6 +92,7 @@ export default {
       }
     })
     .catch((error) => {
+      
       if (error.response) {
         console.error("Error submitting favorite, response error", error.response);
       } else if (error.request) {

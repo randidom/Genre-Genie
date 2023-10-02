@@ -29,4 +29,7 @@ return axios.get(`/profile/genres/${userId}`)
  createNewProfile(genre) {
 return axios.post('/create', genre)
    },
+deleteMovieFromFav(userId, movieId){
+   return axios.delete(`/favorites/${userId}/${movieId}`)
+   }
 }
