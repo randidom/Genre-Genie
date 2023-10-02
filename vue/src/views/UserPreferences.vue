@@ -10,13 +10,10 @@
         <span class="select__text">{{ item.name }}</span>
       </div>
     </div>
-    <div class='name'>
-      <h2>Enter your Name</h2>
-      <input v-model="name" type="text" placeholder="Enter your Profile Name" />
-      </div>
     <div class="title">
-      <h1> Select Up to 3 <br>
-       Genres</h1>
+      <hr>
+      <h2> Select Up to 3 <br>
+       Genres</h2>
       <div v-show="selectedItems.length > 3" class="error-message">
       You can only select up to 3 genres.
     </div>
@@ -80,13 +77,12 @@ export default {
     this.errorMessage = "You can only select up to 3 genres.";
     return;
   }
-  //The method below requires a profile object 
-  const profile = {
-    user_id: this.user.id,
-    name: this.name,
-    genreIds: this.selectedItems.map(item => item.id) // Map selected items to genre IDs
+  //The method below requires a genre object 
+  const genre = {
+    userId: this.$store.state.user.id,
+    genre_id: this.selectedItems.map(item => item.id) // Map selected items to genre IDs
   }
-    service.createNewProfile(profile).then(response => {
+    service.createNewProfile(genre).then(response => {
     this.errorMessage = "";
     this.selectedItems = response.data;
     this.$router.push('/recommendation');
@@ -97,18 +93,6 @@ export default {
       return this.selectedItems.some(selectedItem => selectedItem.id === item.id);
     },
   },
-  //This method is just the template that will be used for the recommendations folder, 
-  //just placing it in here since someone is working on it
-  //Need to grab the id's associated with profile and put those out
-  // getUserSelections(){
-  //   service.getMoviesByGenre(this.genre).then (response => {
-
-  //     service.getAUserProfile().then(response2 => {
-
-  //     })
-  //     this.movies = response.data
-  //   })
-//},
 }
 
 
@@ -129,14 +113,17 @@ export default {
   
 }
 
+.select__item:nth-child(even) {
+  background: #071C42;
+}
+
 .select__item {
-   width: 200px;
+  width: 200px;
   height: 200px;
   padding: 10px;
   cursor: pointer;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   text-align: center;
-  background: #15bbd1;
+  background: #3DCAB1;
   transition: background 0.1s;
   opacity: 0.7;
   display: flex;
@@ -145,43 +132,45 @@ export default {
   font-size: 200%;
   
   
+  font-size: 20pt;
+  color: #f2f2f2;
 }
 
 .select__item--selected {
-  background: #131a46;
-  color: #ffffff;
+  background: #BD7437;
+  opacity: 0.7;
+}
+
+.select__item--selected:nth-child(even) {
+  background: #BD7437;
+  opacity: 0.7;
 }
 
 .title {
   position: absolute;
   top: 140px;
-  left: 20px;
-  font-size: 28px;
-  color: #ffffff;
-  font-family: URW Chancery L, cursive;
-  font-weight: bold;
-  opacity: 0.8;
+  left: 5%;
+  font-size: 20pt;
 }
 
 .submit-button {
   width: 10%;
   padding: 10px;
-  background-color: #15bbd1;
-  color: #fffbfb;
+  background-color: #3DCAB1;
+  color: #f2f2f2;
   border: none;
   cursor: pointer;
   font-size: 30px;
   margin-top: 20px;
   opacity: 0.9;
-  font-family: URW Chancery L, cursive;
   position: absolute;
   right: 400px;
   
 }
 
-.submit-button:hover {
+/* .submit-button:hover {
   background-color: #131a46;
-}
+} */
 
 .name{
   color: white;

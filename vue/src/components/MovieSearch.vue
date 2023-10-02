@@ -5,8 +5,8 @@
     <div v-show="errorMessage" class="error-message">{{ errorMessage }}</div>
     <button class="search-button" @click="searchMoviesByTitle">Search</button>
     <div class="movie-list">
-      <div class="movie-container" v-for="movie in movies" :key="movie.id">
-        <div class="movie-details">
+      <div class="movie-container"  v-for="(movie,index) in movies" :key="movie.id">
+        <div class="movie-details" >
           <h4>{{ movie.title }}</h4>
           <img :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" />
           <h5>{{ movie.overview }}</h5>
@@ -15,7 +15,9 @@
           <br />
           <h5>Rating: {{ movie.vote_average }} / 10</h5>
         </div>
-        <button class="favorite-button">Add as Favorite</button>
+        <button class="favorite-button" @click.prevent="addMovieToFavorites(index)" :class="{ 'added': favorites.includes(movie.id) }">
+            {{ favorites.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+    </button>
       </div>
     </div>
   </div>
@@ -26,8 +28,10 @@ import service from '../services/movieapiservice.js'
 export default {
   data() {
     return {
+      errorMessage: null,
       title: '', 
-      movies: []
+      movies: [],
+      favorites: [],
     };
   },
   methods: {
@@ -41,17 +45,63 @@ export default {
         this.movies = response.data;
         this.errorMessage = null; // Clear any previous error message
       }
-          }
+       }
       );
     },
-    
-  },
+    addMovieToFavorites(index) {
+  if (this.movies.length === 0) {
+    // Handle the case where there are no movies to add as favorites.
+    return;
+  }
+   const movieId = this.movies[index].id;
+   // Updates the button text to "Added to Favorites", so it shows the user it has been already added
+      this.$forceUpdate(); // Force a re-render to update the button text
+
+  // Check if the movie ID already exists in favorites to not get an error in the backend
+  // for duplicate id's
+  if (!this.favorites.includes(movieId)) {
+    const movieToAdd = {
+      id: movieId,
+      title: this.movies[index].title,
+      release_date: this.movies[index].release_date,
+      overview: this.movies[index].overview,
+      vote_average: this.movies[index].vote_average,
+      userId: this.$store.state.user.id,
+      is_favorite: true,
+      
+      
+    };
+
+    // Add the movie to favorites array
+    this.favorites.push(movieId);
+
+ //Adds the movie info to our database
+  service.createAFavoriteMovie(movieToAdd)
+    .then((response) => {
+      if (response.status === 201) {
+        
+        // Successfully added to favorites
+        console.log("Movie added to favorites successfully");
+      } else {
+        console.log("Failed to add movie to favorites");
+      }
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error submitting favorite, response error", error.response);
+      } else if (error.request) {
+        console.error("Server error.", error.request);
+      } else {
+        console.error("An error occurred", error);
+      }
+    });
+}
+    }
+  }
 };
 </script>
 
 <style scoped>
-
-
 
 .container {
   background-color: rgba(22, 29, 117, 0.5);
@@ -143,6 +193,10 @@ export default {
 
 .favorite-button:hover {
  background-color: rgb(18, 18, 49);
+  color: #fff;
+}
+.favorite-button.added {
+  background-color: rgb(18, 18, 49);
   color: #fff;
 }
 </style>

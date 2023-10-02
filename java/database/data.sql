@@ -8,8 +8,8 @@ INSERT INTO genre (genre_id, genre_name) VALUES (28, 'Action'), (12, 'Adventure'
 (18, 'Drama'),(10751, 'Family'),(14, 'Fantasy'),(36, 'History'), (27, 'Horror'), (10402, 'Music'), (9648, 'Mystery'), (10749, 'Romance'), (878, 'Science Fiction'),
 (10770, 'TV Movie'), (53, 'Thriller'), (10752, 'War'), (37, 'Western');
 
-INSERT INTO profile (user_id, name) VALUES (1, 'test');
-INSERT INTO profile_genre(profile_id, genre_id) VALUES (1, 28), (1, 12), (1, 35);
+
+INSERT INTO user_genre(user_id, genre_id) VALUES (1, 28), (1, 12), (2, 35);
 
 
 COMMIT TRANSACTION;

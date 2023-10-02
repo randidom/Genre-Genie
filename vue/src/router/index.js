@@ -8,9 +8,8 @@ import store from '../store/index'
 import Movies from '../components/MoviesComponents.vue'
 import MovieGenre from '../components/MovieSearch.vue'
 import Recommendation from '../views/YourRecommendation.vue'
-import user from '../views/UserFirstPage.vue'
 import UserPreferences from '../views/UserPreferences'
-
+import FavoriteMovies from '../views/FavoriteMovies'
 
 Vue.use(Router)
 
@@ -42,16 +41,17 @@ const router = new Router({
     }
  
   },
-  {path: '/user',
-  name: 'user',
-  component: user,
+  
+{path: '/recommendation',
+  name: 'recommendation',
+  component: Recommendation,
   meta: {
     requiresAuth: true
   }
 },
-{path: '/recommendation',
-  name: 'recommendation',
-  component: Recommendation,
+{path: '/favorites',
+  name: 'favorites',
+  component: FavoriteMovies,
   meta: {
     requiresAuth: true
   }
