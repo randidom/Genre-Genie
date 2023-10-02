@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class MovieController {
 
     @Autowired
@@ -99,20 +99,16 @@ public class MovieController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/favorites", method = RequestMethod.POST)
     public Movie updateMovieToFavorite(@RequestBody @Valid Movie movie) {
-        if (movie.getMovieId() != 0) {
-            return movieDao.createFavorite(movie);
-        } else {
-            return null;
-        }
+        return movieDao.createFavorite(movie);
     }
 
 
     //This method will grab the movies in the movie table from the method above and grab the user favorite movies
-    @RequestMapping(path = "/favorites/movies", method = RequestMethod.GET)
-    public Movie getUserFavoriteMovies() {
-        return movieDao.getFavoriteMovies();
+    @RequestMapping(path = "/favorites/movies/{userId}", method = RequestMethod.GET)
+    public Movie getUserFavoriteMovies(int userId) {
+        return movieDao.getFavoriteMovies(userId);
     }
-    
+
 
 
 }

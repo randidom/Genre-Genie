@@ -3,51 +3,100 @@
     <div class="select">
       <div
         v-for="item in items"
-        :key="item"
-        :class="{ 'select__item': true, 'select__item--selected': selectedItems.includes(item) }"
+        :key="item.id"
+        :class="{ 'select__item': true, 'select__item--selected': isSelected(item) }"
         @click="toggleItem(item)"
       >
-        <span class="select__text">{{ item }}</span>
+        <span class="select__text">{{ item.name }}</span>
       </div>
     </div>
-
     <div class="title">
       <hr>
-      <h2> Select Your Three <br>
-            Favorite Genres</h2>
+      <h2> Select Up to 3 <br>
+       Genres</h2>
+      <div v-show="selectedItems.length > 3" class="error-message">
+      You can only select up to 3 genres.
+    </div>
        
       </div>
 
-    <button class="submit-button" @click="redirectToLoginPage">Submit</button>
+    <button class="submit-button" @click="createUserProfiles">Submit</button>
   </div>
 </template>
 
 <script>
+import service from '../services/movieapiservice.js'
 export default {
   name: "preferences",
   data() {
     return {
+      errorMessage: "",
       items: [
-        "Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary",
-        "Drama", "Family", "Fantasy", "History", "Horror", "Music", "Mystery",
-        "Romance", "Science Fiction", "TV Movie", "Thriller", "War", "Western", "Christmas"
+        //This connects to following genre_ids exactly how they are in the external API
+      { name: "Action", id: 28 },
+      { name: "Adventure", id: 12 },
+      {name: "Animation", id: 16},
+      {name: "Comedy", id: 35},
+      {name: "Crime", id: 80},
+      {name: "Documentary", id: 99},
+      {name: "Drama", id: 18},
+      {name: "Family", id: 10751},
+      {name: "Fantasy", id: 14},
+      {name: "History", id: 36},
+      {name: "Horror", id: 27},
+      {name: "Music", id: 10402},
+      {name: "Mystery", id: 9648},
+      {name: "Romance", id: 10749},
+      {name: "Science Fiction", id: 878},
+      {name: "TV Movie", id: 10770},
+      {name: "Thriller", id: 53},
+      {name: "War", id: 10752},
+      {name: "Western", id: 37},
+      {name: "None", id: null}
       ],
-      selectedItems: []
+      selectedItems: [],
+      name: '',
     };
   },
   methods: {
     toggleItem(item) {
-      if (this.selectedItems.includes(item)) {
-        this.selectedItems = this.selectedItems.filter(i => i !== item);
-      } else {
-        this.selectedItems.push(item);
-      }
-    },
-     redirectToLoginPage() {
-      this.$router.push('/login');
+     // Find the index of the selected item in selectedItems based on item's ID
+    const index = this.selectedItems.findIndex(selectedItem => selectedItem.id === item.id);
+    if (index !== -1) {
+      // Item is already selected, so deselect it
+      this.selectedItems.splice(index, 1);
+    } else if (this.selectedItems.length < 3) {
+      // Item is not selected and the limit is not reached, so select it
+      this.selectedItems.push(item);
+    } else {
+      this.errorMessage = "You can only select up to 3 genres.";
     }
+  },
+  createUserProfiles(){
+    if (this.selectedItems.length > 3) {
+    this.errorMessage = "You can only select up to 3 genres.";
+    return;
   }
-};
+  //The method below requires a genre object 
+  const genre = {
+    userId: this.$store.state.user.id,
+    genre_id: this.selectedItems.map(item => item.id) // Map selected items to genre IDs
+  }
+    service.createNewProfile(genre).then(response => {
+    this.errorMessage = "";
+    this.selectedItems = response.data;
+    this.$router.push('/recommendation');
+    })
+  },
+  isSelected(item) {
+      // Check if an item is selected based on its id
+      return this.selectedItems.some(selectedItem => selectedItem.id === item.id);
+    },
+  },
+}
+
+
+
 
 </script>
 
@@ -117,5 +166,18 @@ export default {
 /* .submit-button:hover {
   background-color: #131a46;
 } */
+
+.name{
+  color: white;
+}
+
+.name{
+  width: 50%;
+}
+/* prevents horizontal scroll */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
 </style>

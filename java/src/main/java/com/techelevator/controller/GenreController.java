@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,17 @@ public class GenreController {
             return genre;
         }
 
+    }
+
+    @RequestMapping(path = "/profile/genres/{userId}", method = RequestMethod.GET)
+    public Genre userGenrePreferences(@PathVariable int userId){
+        return genreDao.getGenrePreferences(userId);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path= "/create", method = RequestMethod.POST)
+    public List<Genre> createGenrePreferences(@RequestBody @Valid Genre genre){
+        return genreDao.addGenresToUser(genre);
     }
 
 }

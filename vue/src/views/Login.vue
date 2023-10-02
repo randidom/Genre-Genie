@@ -49,7 +49,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/user");
+            this.$router.push("/recommendation");
           }
         })
         .catch(error => {
@@ -144,7 +144,7 @@ input{
 }
 
 button{
-    margin-top: 50px;
+    margin-top: 20px;
     width: 100%;
     background-color: #3DCAB1;
     color: #f2f2f2;

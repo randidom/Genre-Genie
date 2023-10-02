@@ -10,4 +10,11 @@ public interface GenreDao {
 
     Genre getGenreById(int id);
     //This grabs the genre name associated with it's particular ID
+
+    Genre getGenrePreferences(int id);
+    //This grabs the preferences tied to the user_id
+
+    List<Genre> addGenresToUser(Genre genres);
+    //When a user registers, they are asked to select up to three genre preferences, this will grab the
+    //genre id's from those and add it to the profile_genre table since many profiles can have many id's.
 }

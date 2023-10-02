@@ -19,17 +19,17 @@ return axios.get(`/movies/titles/${title}`)
 createAFavoriteMovie(movie){
 return axios.post('/favorites', movie)
  },
-getAllUserFavoriteMovies(){
-return axios.get('/favorites/movies')
+getAllUserFavoriteMovies(userId){
+return axios.get(`/favorites/movies/${userId}`)
 },
 getGenreList(){
    return axios.get('/movies/genre/list')
  },
-getAUserProfile(){
-return axios.get('/profile/genres')
+getAUserProfile(userId){
+return axios.get(`/profile/genres/${userId}`)
 },
-//This is a profile object in the parameters coming from our own database
- createNewProfile(profile) {
-return axios.post('/create', profile)
+//This is a genre object in the parameters coming from our own database
+ createNewProfile(genre) {
+return axios.post('/create', genre)
    },
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
     <hr>
-    <form @submit.prevent="register">
+    <form class="form" @submit.prevent="register">
       <h2>Create Account</h2>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -53,7 +53,7 @@ export default {
             if (response.status == 201) {
               this.$router.push({
                 path: '/preferences',
-                query: { registration: 'success' },
+                query: { registration: 'success'},
               });
             }
           })
@@ -77,15 +77,19 @@ export default {
 <style scoped>
 .form-input-group {
   margin-bottom: 1rem;
+  margin-top: 10px;
 }
 label {
   margin-right: 0.5rem;
+  margin-top: -2%;
 }
 button{
-  margin-top: 5px;
+  margin-top: 3px;
 }
 h2{
   position: relative;
   bottom:10px;
 }
+
+
 </style>

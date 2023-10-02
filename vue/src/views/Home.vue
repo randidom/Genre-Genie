@@ -66,6 +66,8 @@ main {
   position: absolute;
   /* top: 49%;
   right: 23%; 
+  top: 49%;
+  left: 73%;
   transform: translate(-50%, -50%);
   /* backdrop-filter: blur(10px); */
 }
@@ -111,4 +113,5 @@ hr{
   /* background-color: #3DCAB1; */
   background-color: #BD7437;
 }
+
 </style>

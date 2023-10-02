@@ -1,21 +1,24 @@
 <template>
   <div class="container">
     <h2>Movie Search by Title</h2>
-    <input v-model="title" type="text" placeholder="Enter Title" />
+    <input class="input" v-model="title" type="text" placeholder="Enter Title" />
     <div v-show="errorMessage" class="error-message">{{ errorMessage }}</div>
     <button class="search-button" @click="searchMoviesByTitle">Search</button>
-    <div class= "movie-container" v-for="movie in movies" :key="movie.id">
-      <div class="movie-details">
-        <h4>{{ movie.title }}</h4>
-         <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster"/>
-         <h5>{{movie.overview}}</h5>
-         <br/>
-         <h5>Release Date: {{movie.release_date}}</h5>
-         <br/>
-         <h5>Rating: {{movie.vote_average}} / 10</h5>
-         </div>
-         <button id="favorite-button">Add as Favorite</button>
-      
+    <div class="movie-list">
+      <div class="movie-container"  v-for="(movie,index) in movies" :key="movie.id">
+        <div class="movie-details" >
+          <h4>{{ movie.title }}</h4>
+          <img :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" />
+          <h5>{{ movie.overview }}</h5>
+          <br />
+          <h5>Release Date: {{ movie.release_date }}</h5>
+          <br />
+          <h5>Rating: {{ movie.vote_average }} / 10</h5>
+        </div>
+        <button class="favorite-button" @click.prevent="addMovieToFavorites(index)" :class="{ 'added': favorites.includes(movie.id) }">
+            {{ favorites.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+    </button>
+      </div>
     </div>
   </div>
 </template>
@@ -25,8 +28,10 @@ import service from '../services/movieapiservice.js'
 export default {
   data() {
     return {
+      errorMessage: null,
       title: '', 
-      movies: []
+      movies: [],
+      favorites: [],
     };
   },
   methods: {
@@ -40,37 +45,113 @@ export default {
         this.movies = response.data;
         this.errorMessage = null; // Clear any previous error message
       }
-          }
+       }
       );
     },
-    
-  },
+    addMovieToFavorites(index) {
+  if (this.movies.length === 0) {
+    // Handle the case where there are no movies to add as favorites.
+    return;
+  }
+   const movieId = this.movies[index].id;
+   // Updates the button text to "Added to Favorites", so it shows the user it has been already added
+      this.$forceUpdate(); // Force a re-render to update the button text
+
+  // Check if the movie ID already exists in favorites to not get an error in the backend
+  // for duplicate id's
+  if (!this.favorites.includes(movieId)) {
+    const movieToAdd = {
+      id: movieId,
+      title: this.movies[index].title,
+      release_date: this.movies[index].release_date,
+      overview: this.movies[index].overview,
+      vote_average: this.movies[index].vote_average,
+      userId: this.$store.state.user.id,
+      is_favorite: true,
+      
+      
+    };
+
+    // Add the movie to favorites array
+    this.favorites.push(movieId);
+
+ //Adds the movie info to our database
+  service.createAFavoriteMovie(movieToAdd)
+    .then((response) => {
+      if (response.status === 201) {
+        
+        // Successfully added to favorites
+        console.log("Movie added to favorites successfully");
+      } else {
+        console.log("Failed to add movie to favorites");
+      }
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error("Error submitting favorite, response error", error.response);
+      } else if (error.request) {
+        console.error("Server error.", error.request);
+      } else {
+        console.error("An error occurred", error);
+      }
+    });
+}
+    }
+  }
 };
 </script>
 
 <style scoped>
+
 .container {
-  background-color: rgba(207, 223, 238, 0.9);
+  background-color: rgba(22, 29, 117, 0.5);
   text-align: center;
   padding: 20px;
-  border-radius: 10px;
   margin: 0 auto;
   width: 90%;
-  max-width: 600px;
+  max-width: 1700px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   position: absolute;
-  top: 50%;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(30px);
+  font-family: monospace;
+  font-size: 20px;
+  color:#fff;
+}
+
+.input{
+  color: #fff;
+  text-align: center;
+  width: 50%;
+  margin: auto;
+  display: block;
+}
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: fixed;
+  font-family: serif;
+  width: 100%;
+  margin-top: 20px;
+  right: 0px;
+  background-color: rgb(118, 228, 255);
 }
 
 .movie-container {
-  width: calc(50% - 10px); /* 50% width for each movie container with some spacing */
-  margin-bottom: 20px; /* Add space between rows */
-  background-color: rgb(255, 255, 255); /* Background color for each movie container */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  border-radius: 5px; /* Rounded corners */
+  flex-basis: calc(20% - 0px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 5px rgba(44, 43, 43, 0.1);
+  background-color: rgb(22, 28, 117);
+  border: 1px solid black;
+  color: #d5e9fd;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
 }
 
 .movie-details {
@@ -83,25 +164,39 @@ export default {
 }
 
 .movie-container img {
-  max-width: 100%; /* Allow images to scale within their container */
+  max-width: 100%;
 }
-.search-button{
-   background-color: #425b75;
+
+.search-button {
+  width: 25%;
+  font-size: 20px;
+  background-color:rgb(248, 163, 5);
+  margin-top: 15px;
+  border-radius: 0px;
+}
+.search-button:hover{
+  background-color: rgb(18, 18, 49);
+  color: #fff;
 }
 
 .favorite-button {
-  background-color: #425b75;
-  color: #fff;
-  padding: 5px 10px; /* Adjust button padding as needed */
+  background-color: rgb(248, 163, 5);
+  color: rgb(18, 20, 51);
+  padding: 5px 10px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 100%; /* Make the button the same width as the container */
   font-size: 13px;
+  border-radius: 0;
+  margin-top: auto; 
 }
 
 .favorite-button:hover {
-  background-color: #0056b3;
+ background-color: rgb(18, 18, 49);
+  color: #fff;
+}
+.favorite-button.added {
+  background-color: rgb(18, 18, 49);
+  color: #fff;
 }
 </style>
