@@ -79,8 +79,9 @@ export default {
     box-sizing: border-box;
 }
 body{
-    background-image: url("../assets/movie-background-collage.jpg");
-    background-size: 2500px 2000px;
+    background: url("../assets/movie-background-collage.jpg") #3DCAB1;
+    background-size: cover;
+    background-blend-mode: multiply;
 }
 .background{
     width: 430px;
