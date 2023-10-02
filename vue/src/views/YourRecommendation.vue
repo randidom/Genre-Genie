@@ -29,14 +29,24 @@ export default {
   data() {
     return {
       movies: [],
-      selectedMovies: [] // New data property to store selected movies
+      selectedMovies: [], // New data property to store selected movies
+      genreIds: []
+
     }
   },
   methods: {
     recomendations() {
-      service.getAllMovies().then(response => {
+       const userId = this.$store.state.user.id;
+      service.getGenrePreferences(userId).then(response => {
+        this.genreIds = response.data
+      })
+      const genre = {
+        genreIds: this.genreIds,
+      }
+      service.getMoviesByGenre(genre).then(response => {
         this.movies = response.data
       })
+    },
     },
     addToFavorites(index) {
       if (this.movies.length === 0) {
@@ -82,7 +92,7 @@ export default {
       }
     });
 }
-    }
+    
   },
   created() {
     this.recomendations();

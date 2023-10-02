@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.MovieDao;
+import com.techelevator.model.Genre;
 import com.techelevator.model.Movie;
 import com.techelevator.model.Response;
 import com.techelevator.model.Results;
@@ -14,11 +15,13 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@CrossOrigin(value="http://localhost:8080")
+@PreAuthorize("isAuthenticated()")
 public class MovieController {
 
     @Autowired
@@ -52,8 +55,9 @@ public class MovieController {
         }
     }
 
-    @RequestMapping(path = "/movies/genre/{genre}", method = RequestMethod.GET)
-    public List<Results> getMoviesBySelectedGenre(@PathVariable int genre) {
+    @RequestMapping(path = "/movies/genre/recs", method = RequestMethod.GET)
+    public List<Results> getMoviesBySelectedGenre(@RequestBody @Valid Genre genre) {
+
         List<Results> movies = new ArrayList<>();
         HttpHeaders header = new HttpHeaders();
 
@@ -61,11 +65,11 @@ public class MovieController {
 
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity entity = new HttpEntity<>(header);
-
-        Response response = restTemplate.exchange("https://api.themoviedb.org/3/discover/movie?with_genres=" + genre, HttpMethod.GET, entity, Response.class).getBody();
-        movies = response.getAllMovies();
-
-        if (movies == null) {
+        for(int id: genre.getGenreIds()) {
+            Response response = restTemplate.exchange("https://api.themoviedb.org/3/discover/movie?with_genres=" + id, HttpMethod.GET, entity, Response.class).getBody();
+            movies.addAll(response.getAllMovies());
+        }
+        if (movies.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movies are not found for this genre.");
         } else {
             return movies;

@@ -158,7 +158,6 @@ public class JdbcMovieDao implements MovieDao{
             System.out.println("SQL statement isn't working");
         } catch (DataIntegrityViolationException e) {
             System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
-            e.printStackTrace();
         }
 
         return favoriteMovie;
