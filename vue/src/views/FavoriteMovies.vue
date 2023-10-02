@@ -6,17 +6,21 @@
     <div class="scrolling-container">
     <div class="container">
       <div class="Ultimate-grid">
-        <div class="item" v-for="movie in movies" :key= "movie.id">
+        <div class="item" v-for="movie in movies" :key= movie.id>
           <div class="content">
             <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" width="200"/>
             <h3>{{movie.title}}</h3>
             <br>{{movie.overview}}
+            <br />
+          <h5>Release Date: {{ movie.release_date }}</h5>
+          <br />
+          <h5>Rating: {{ movie.vote_average }} / 10</h5>
+           </div>
           </div>
           </div>
           </div>
         </div>
       </div>
-    </div>
 </template>
 
 <script>
@@ -26,15 +30,15 @@ export default {
 data() {
     return {
         movies: []
-  
     }
   },
-  methods: {
-      getUserFavorite() {
-        const userId = this.$store.state.user.id
+
+  created(){
+   const userId = this.$store.state.user.id
           service.getAllUserFavoriteMovies(userId).then(
               (response) => {
-                 if (response.status === 200) {
+                if (response.status === 200) {
+                  console.log(response.data)
                    this.movies = response.data;
                        
         console.log("Movie favorites have loaded ");
@@ -51,12 +55,6 @@ data() {
         console.error("An error occurred", error);
       }
     });
-    
-      }, 
-
-  },
-  created(){
-    this.getUserFavorite();
   }
 
 }

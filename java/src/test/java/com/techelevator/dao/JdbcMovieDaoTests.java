@@ -92,8 +92,10 @@ public class JdbcMovieDaoTests extends BaseDaoTests{
 
     @Test
     public void movies_that_are_favorite_are_only_returned(){
-        Movie movie = sut.getFavoriteMovies(3);
-        assertMoviesMatch(movie, MOVIE_2);
+        List<Movie> movie = sut.getFavoriteMovies(3);
+
+        Assert.assertEquals(1, movie.size());
+        assertMoviesMatch(movie.get(0), MOVIE_2);
         //MOVIE_2 is set to true for favorite
     }
 
