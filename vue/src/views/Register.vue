@@ -81,7 +81,7 @@ export default {
 }
 label {
   margin-right: 0.5rem;
-  margin-top: 5%;
+  margin-top: -2%;
 }
 button{
   margin-top: 3px;
