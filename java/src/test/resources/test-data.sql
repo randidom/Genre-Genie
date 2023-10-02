@@ -9,28 +9,18 @@ INSERT INTO users (username,password_hash,role) VALUES ('user4','user4','ROLE_US
 
 INSERT INTO genre (genre_id, genre_name) VALUES (1, 'Comedy');
 INSERT INTO genre (genre_id, genre_name) VALUES (2, 'Action');
-INSERT INTO genre (genre_id, genre_name) VALUES (3, 'Horror');
+INSERT INTO genre (genre_id, genre_name) VALUES ( 3, 'Horror');
 
 
 
-INSERT INTO movie(title, release_date, overview, vote_average, is_favorite)
-VALUES ('Barbie', '2023-08-23', 'Barbie wants to become human', 9.5, false);
-INSERT INTO movie(title, release_date, overview, vote_average, is_favorite)
-VALUES ('Spider-man', '2022-05-09', 'Tom Holland takes the role of Spider-man', 9.8, true);
-INSERT INTO movie(title, release_date, overview, vote_average, is_favorite)
-VALUES ('Saw V', '2017-10-30', 'John Kramer is back', 7.2, false);
+INSERT INTO movie(movie_id, title, release_date, overview, vote_average, user_id, is_favorite)
+VALUES (200, 'Barbie', '2023-08-23', 'Barbie wants to become human', 9.5, 2, false),
+(201, 'Spider-man', '2022-05-09', 'Tom Holland takes the role of Spider-man', 9.8, 3, true),
+(202, 'Saw V', '2017-10-30', 'John Kramer is back', 7.2, 1, false);
 
-INSERT INTO movie_genre (movie_id, genre_id) VALUES (1, 1), (2, 2),(3,3);
+INSERT INTO movie_genre (movie_id, genre_id) VALUES (200, 1), (201, 2),(202,3);
 
-
-INSERT INTO profile(user_id, name)
-VALUES (1, 'Randi');
-INSERT INTO profile(user_id, name)
-VALUES (2, 'Jim');
-INSERT INTO profile(user_id, name)
-VALUES (3, 'Sara');
-
-INSERT INTO profile_genre(profile_id, genre_id)
+INSERT INTO user_genre(user_id, genre_id)
 VALUES(1, 1), (2, 2), (3, 3);
 
 

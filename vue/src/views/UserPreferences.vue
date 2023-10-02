@@ -10,10 +10,6 @@
         <span class="select__text">{{ item.name }}</span>
       </div>
     </div>
-    <div class='name'>
-      <h2>Enter your Name</h2>
-      <input v-model="name" type="text" placeholder="Enter your Profile Name" />
-      </div>
     <div class="title">
       <h1> Select Up to 3 <br>
        Genres</h1>
@@ -80,13 +76,12 @@ export default {
     this.errorMessage = "You can only select up to 3 genres.";
     return;
   }
-  //The method below requires a profile object 
-  const profile = {
-    user_id: this.user.id,
-    name: this.name,
-    genreIds: this.selectedItems.map(item => item.id) // Map selected items to genre IDs
+  //The method below requires a genre object 
+  const genre = {
+    userId: this.$store.state.user.id,
+    genre_id: this.selectedItems.map(item => item.id) // Map selected items to genre IDs
   }
-    service.createNewProfile(profile).then(response => {
+    service.createNewProfile(genre).then(response => {
     this.errorMessage = "";
     this.selectedItems = response.data;
     this.$router.push('/recommendation');
@@ -97,18 +92,6 @@ export default {
       return this.selectedItems.some(selectedItem => selectedItem.id === item.id);
     },
   },
-  //This method is just the template that will be used for the recommendations folder, 
-  //just placing it in here since someone is working on it
-  //Need to grab the id's associated with profile and put those out
-  // getUserSelections(){
-  //   service.getMoviesByGenre(this.genre).then (response => {
-
-  //     service.getAUserProfile().then(response2 => {
-
-  //     })
-  //     this.movies = response.data
-  //   })
-//},
 }
 
 
