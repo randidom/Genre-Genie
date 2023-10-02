@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 <script>
 import service from '../services/movieapiservice.js'

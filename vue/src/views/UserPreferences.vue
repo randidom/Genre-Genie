@@ -11,8 +11,9 @@
       </div>
     </div>
     <div class="title">
-      <h1> Select Up to 3 <br>
-       Genres</h1>
+      <hr>
+      <h2> Select Up to 3 <br>
+       Genres</h2>
       <div v-show="selectedItems.length > 3" class="error-message">
       You can only select up to 3 genres.
     </div>
@@ -114,58 +115,61 @@ export default {
   width: 100%; 
 }
 
+.select__item:nth-child(even) {
+  background: #071C42;
+}
+
 .select__item {
-   width: 200px;
+  width: 200px;
   height: 200px;
   padding: 10px;
   cursor: pointer;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   text-align: center;
-  background: #15bbd1;
+  background: #3DCAB1;
   transition: background 0.1s;
   opacity: 0.7;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 200%;
-  
+  font-size: 20pt;
+  color: #f2f2f2;
 }
 
 .select__item--selected {
-  background: #131a46;
-  color: #ffffff;
+  background: #BD7437;
+  opacity: 0.7;
+}
+
+.select__item--selected:nth-child(even) {
+  background: #BD7437;
+  opacity: 0.7;
 }
 
 .title {
   position: absolute;
   top: 140px;
-  left: 20px;
-  font-size: 28px;
-  color: #ffffff;
-  font-family: URW Chancery L, cursive;
-  font-weight: bold;
-  opacity: 0.8;
+  left: 5%;
+  font-size: 20pt;
 }
 
 .submit-button {
   width: 10%;
   padding: 10px;
-  background-color: #15bbd1;
-  color: #fffbfb;
+  background-color: #3DCAB1;
+  color: #f2f2f2;
   border: none;
   cursor: pointer;
   font-size: 30px;
   margin-top: 20px;
   opacity: 0.9;
-  font-family: URW Chancery L, cursive;
   position: absolute;
   right: 400px;
   
 }
 
-.submit-button:hover {
+/* .submit-button:hover {
   background-color: #131a46;
-}
+} */
 
 .name{
   color: white;

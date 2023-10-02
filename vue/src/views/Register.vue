@@ -1,7 +1,8 @@
 <template>
   <div id="register" class="text-center">
+    <hr>
     <form class="form" @submit.prevent="register">
-      <h1>Create Account</h1>
+      <h2>Create Account</h2>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -17,7 +18,7 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
-      <button type="submit">Create Account</button>
+      <button type="submit">CREATE ACCOUNT</button>
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
@@ -80,15 +81,14 @@ export default {
 }
 label {
   margin-right: 0.5rem;
-  margin-top: 5%;
+  margin-top: -2%;
 }
 button{
   margin-top: 3px;
 }
-h1{
-    position: relative;
-bottom:10px;
-top: -10px;
+h2{
+  position: relative;
+  bottom:10px;
 }
 
 

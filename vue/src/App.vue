@@ -9,16 +9,33 @@
     <router-view />
   </div>
 </template>
-<style>
 
+<style>
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1 {
+  font-size: 80px;
+  font-weight:800;
+  color:#f2f2f2;
+}
+
+h2 {
+  font-size: 40px;
+  color:#f2f2f2;
+}
+
+p {
+  font-size: 15px;
+  color:#f2f2f2;
 }
 
 #nav {
   overflow: hidden;
-  background-color: rgb(40, 44, 63);
+  background-color: #3DCAB1;
 }
 
 #nav a {
@@ -31,11 +48,16 @@ body {
 }
 
 #nav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #071C42;
 }
 h2{
   color: white;
+}
+hr{
+  height: 1px;
+  background-color:#3DCAB1;
+  opacity: 70%;
+  border:none;
 }
 
 </style>
