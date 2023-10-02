@@ -7,6 +7,7 @@ CREATE TABLE users (
 	username varchar(50) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
+	is_activated boolean DEFAULT false,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
@@ -23,6 +24,7 @@ CREATE TABLE movie (
     release_date varchar (80),
     overview varchar(1000),
     vote_average numeric(3,2),
+    poster_path varchar(200),
     is_favorite boolean,
     user_id int,
     CONSTRAINT PK_movie_id PRIMARY KEY (movie_id),

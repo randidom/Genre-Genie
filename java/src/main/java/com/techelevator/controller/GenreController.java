@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +52,8 @@ public class GenreController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path= "/create", method = RequestMethod.POST)
-    public List<Genre> createGenrePreferences(@RequestBody @Valid Genre genre){
-        return genreDao.addGenresToUser(genre);
+    public void createGenrePreferences(@RequestBody @Valid Genre genre, Principal principal){
+         genreDao.addGenresToUser(genre, principal);
     }
 
 }
