@@ -67,6 +67,7 @@ export default {
       overview: this.movies[index].overview,
       vote_average: this.movies[index].vote_average,
       userId: this.$store.state.user.id,
+      poster_path: this.movies[index].poster_path,
       is_favorite: true,
       
       

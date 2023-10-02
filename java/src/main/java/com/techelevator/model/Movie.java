@@ -19,6 +19,10 @@ public class Movie {
 
     private String overview;
 
+
+    @JsonProperty("poster_path")
+    private String posterPath;
+
     private String title;
 
     @JsonProperty("vote_average")
@@ -27,6 +31,13 @@ public class Movie {
 
     private int userId;
 
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
 
     //Default constructor for it to be easier to create a new movie
     public Movie() {
@@ -68,6 +79,16 @@ public class Movie {
         this.voteAverage = voteAverage;
         this.isFavorite = isFavorite;
         this.userId = userId;
+    }
+    public Movie( int movieId, String title, String releaseDate, String overview, double voteAverage, boolean isFavorite, int userId, String posterPath) {
+        this.releaseDate = releaseDate;
+        this.movieId = movieId;
+        this.overview = overview;
+        this.title = title;
+        this.voteAverage = voteAverage;
+        this.isFavorite = isFavorite;
+        this.userId = userId;
+        this.posterPath = posterPath;
     }
 
     public int getUserId() {

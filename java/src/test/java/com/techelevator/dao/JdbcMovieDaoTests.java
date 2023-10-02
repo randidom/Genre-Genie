@@ -99,7 +99,7 @@ public class JdbcMovieDaoTests extends BaseDaoTests{
 
     @Test
     public void create_a_movie_returns_with_newId(){
-        testMovie = new Movie(203, "Test","12-11-2000", "testing to see if this creates a movie", 8.5, true, 1 );
+        testMovie = new Movie(203, "Test","12-11-2000", "testing to see if this creates a movie", 8.5, true, 1, "http.picture.jpg");
         Movie movie = sut.createFavorite(testMovie);
 
         int newId = movie.getMovieId();

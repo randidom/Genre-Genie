@@ -24,6 +24,7 @@ CREATE TABLE movie (
     release_date varchar (80),
     overview varchar(1000),
     vote_average numeric(3,2),
+    poster_path varchar(200),
     is_favorite boolean,
     user_id int,
     CONSTRAINT PK_movie_id PRIMARY KEY (movie_id),
