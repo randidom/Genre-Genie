@@ -119,7 +119,7 @@ export default {
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: monospace;
+  /* font-family: monospace; */
   font-size: 20px;
   color:#fff;
   

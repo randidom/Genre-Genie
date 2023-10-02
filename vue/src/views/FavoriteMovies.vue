@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="Title">
-      <h1> Your Favorite Movies</h1>
+      <h2> Your Favorite Movies</h2>
     </div>
     <div class="scrolling-container">
     <div class="container">

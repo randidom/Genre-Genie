@@ -2,7 +2,8 @@
   <div id="register" class="text-center">
     <hr>
     <form class="form" @submit.prevent="register">
-      <h2>Create Account</h2>
+      <hr>
+      <h2 id="create-account">Create Account</h2>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -83,13 +84,19 @@ label {
   margin-right: 0.5rem;
   margin-top: -2%;
 }
-button{
+button {
   margin-top: 3px;
+  text-align: left;
+  padding-left: 20px;
 }
-h2{
+h2 {
   position: relative;
   bottom:10px;
 }
 
+hr {
+  width: 600px;  
+  margin-bottom: 50px;
+}
 
 </style>
