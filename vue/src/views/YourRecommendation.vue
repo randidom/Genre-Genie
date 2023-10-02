@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="Title">
-      <h1> Movie Recommendations</h1>
+      <hr>
+      <h2> Movie Recommendations</h2>
     </div>
     <div class="scrolling-container">
     <div class="container">

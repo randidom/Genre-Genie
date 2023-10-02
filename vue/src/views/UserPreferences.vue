@@ -12,10 +12,10 @@
     </div>
     <div class="title">
       <hr>
-      <h2> Select Up to 3 <br>
-       Genres</h2>
+      <h2> Select Up to<br>
+       Three Genres</h2>
       <div v-show="selectedItems.length > 3" class="error-message">
-      You can only select up to 3 genres.
+      You can only select up to three genres.
     </div>
        
       </div>
@@ -109,7 +109,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   max-width: 300px;
-  gap: 1px;
+  /* gap: 1px; */
   margin-left:920px;
   margin-top: 0px;
   width: 100%; 
@@ -127,7 +127,7 @@ export default {
   text-align: center;
   background: #3DCAB1;
   transition: background 0.1s;
-  opacity: 0.7;
+  /* opacity: 0.7; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,12 +137,12 @@ export default {
 
 .select__item--selected {
   background: #BD7437;
-  opacity: 0.7;
+  /* opacity: 0.7; */
 }
 
 .select__item--selected:nth-child(even) {
   background: #BD7437;
-  opacity: 0.7;
+  /* opacity: 0.7; */
 }
 
 .title {
@@ -167,9 +167,9 @@ export default {
   
 }
 
-/* .submit-button:hover {
+.submit-button:hover {
   background-color: #131a46;
-} */
+}
 
 .name{
   color: white;
