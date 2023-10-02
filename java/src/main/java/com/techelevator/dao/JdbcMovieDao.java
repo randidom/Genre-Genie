@@ -116,15 +116,16 @@ public class JdbcMovieDao implements MovieDao{
 
 
     @Override
-    public Movie getFavoriteMovies(Integer userId) {
-        //This will only select movies if they are favorite(d) by the user
-        Movie movie = null;
+    public List<Movie> getFavoriteMovies(int userId) {
+        //This will only select movies if they are favorite(d) by the user\
+
+        List<Movie> results = new ArrayList<>();
         String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id, poster_path FROM movie WHERE is_favorite = true AND user_id = ?;";
         try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            SqlRowSet queryResults = jdbcTemplate.queryForRowSet(sql, userId);
             //Users can have multiple favorite movies selected
-            while(results.next()){
-                movie = mapMovie(results);
+            while(queryResults.next()){
+                results.add(mapMovie(queryResults));
             }
         }catch (CannotGetJdbcConnectionException e) {
         System.out.println("Database is down.");
@@ -134,7 +135,7 @@ public class JdbcMovieDao implements MovieDao{
          }catch (DataIntegrityViolationException e){
         System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
          }
-        return movie;
+        return results;
 
     }
 

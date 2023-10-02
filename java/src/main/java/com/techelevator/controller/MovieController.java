@@ -109,7 +109,7 @@ public class MovieController {
 
     //This method will grab the movies in the movie table from the method above and grab the user favorite movies
     @RequestMapping(path = "/favorites/movies/{userId}", method = RequestMethod.GET)
-    public Movie getUserFavoriteMovies(Integer userId) {
+    public List<Movie> getUserFavoriteMovies(@PathVariable int userId) {
         return movieDao.getFavoriteMovies(userId);
     }
 

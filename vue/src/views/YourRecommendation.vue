@@ -146,7 +146,7 @@ export default {
   padding: 20px;
 }
 .button-container {
-    justify-content: center; 
+  justify-content: center; 
   margin-top: 20px;
 }
 .button1 {
