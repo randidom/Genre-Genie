@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,6 +17,9 @@ public class User {
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
 
+   @JsonProperty("isActivated")
+   private boolean firstLogin;
+
    public User() { }
 
    public User(int id, String username, String password, String authorities) {
@@ -25,6 +29,15 @@ public class User {
       if(authorities != null) this.setAuthorities(authorities);
       this.activated = true;
    }
+
+   public boolean isFirstLogin() {
+      return firstLogin;
+   }
+
+   public void setFirstLogin(boolean firstLogin) {
+      this.firstLogin = firstLogin;
+   }
+
 
    public int getId() {
       return id;

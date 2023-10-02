@@ -1,9 +1,11 @@
 <template>
   <div id="app">
     <div id="nav" v-if="$store.state.token != ''">
+      <h2>Welcome {{ this.$store.state.user.username}}!</h2>
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
        <router-link v-bind:to="{ name: 'recommendation' }" v-if="$store.state.token != ''">Recommended</router-link>
       <router-link v-bind:to="{ name: 'search' }" v-if="$store.state.token != ''">Search</router-link>
+      
     </div>
     <router-view />
   </div>
@@ -49,7 +51,9 @@ p {
 #nav a:hover {
   background-color: #071C42;
 }
-
+h2{
+  color: white;
+}
 hr{
   height: 1px;
   background-color:#3DCAB1;
