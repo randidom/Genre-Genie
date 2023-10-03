@@ -45,20 +45,46 @@ export default {
   },
   methods: {
     recomendations() {
-       const userId = this.$store.state.user.id;
-      service.getGenrePreferences(userId).then(response => {
-        this.genre = response.data;
-        console.log(response.data);
-        this.getGenrePreferences();
-        
-      })
-    },
-    getGenrePreferences(){
-      service.getMoviesByGenre(this.genre).then(response => {
-        this.movies = response.data
-      })
+  const userId = this.$store.state.user.id;
 
-    },
+  //This grabs the genre preferences by the user id
+  service.getGenrePreferences(userId).then(response => {
+    this.genre = response.data;
+
+    //This grabs the movies based on genre preferences, matching the genre id's associated with that user id
+    service.getMoviesByGenre(this.genre).then(response => {
+      const genreMovies = response.data;
+
+      //Calculate a matching score for each movie
+      //Example if a user picks action + comedy which a movie has, it will show that movie first
+      //Before a movie that just has action or comedy
+
+      genreMovies.forEach(movie => {
+        movie.matchScore = this.calculateMatchScore(movie);
+      });
+
+      //This will sort the movies by matchScore in descending order, so the most top matching movie(s) appear first
+      genreMovies.sort((a, b) => b.matchScore - a.matchScore);
+
+      this.movies = genreMovies;
+    });
+  });
+},
+calculateMatchScore(movie) {
+    //Calculate the matching score based on how many genre IDs match the user's preferences
+    //This method will allow movie recommendations to go in hierachiral order (most matched) to most recommened from least recommened
+    const userGenreIds = this.genre.genreIds;
+    const movieGenreIds = movie.genre_ids;
+
+    let matchScore = 0;
+    userGenreIds.forEach(userGenreId => {
+      if (movieGenreIds.includes(userGenreId)) {
+        matchScore++;
+      }
+    });
+
+    return matchScore;
+  },
     addToFavorites(index) {
 if (this.movies.length === 0) {
     //Handle the case where there are no movies to add as favorites.
@@ -114,6 +140,7 @@ if (this.movies.length === 0) {
       });
   }
   }
+
 },
   
   created() {
