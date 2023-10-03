@@ -1,27 +1,36 @@
 <template>
   <div>
     <div class="Title">
-      <h1> Movie Recommendations</h1>
+      <h1>Movie Recommendations</h1>
     </div>
     <div class="scrolling-container">
-    <div class="container">
-      <div class="Ultimate-grid">
-        <div class="item" v-for="(movie, index) in movies" :key= "movie.id">
-          <div class="content">
-            <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" width="200"/>
-            <h3>{{movie.title}}</h3>
-            <br>{{movie.overview}}
-          </div>
-          <div class="button-container">
-            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(index)" :class="{ 'added': selectedMovies.includes(movie.id) }">
-            {{ selectedMovies.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
-            </button>
-          </div>
+      <div class="container">
+        <div class="Ultimate-grid">
+          <div class="item" v-for="(movie, index) in movies" :key="movie.id">
+            <div class="content">
+              <img
+                v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+                alt="movie poster"
+                width="200"
+              />
+              <h3>{{ movie.title }}</h3>
+              <br>{{ movie.overview }}
+            </div>
+            <div class="button-container">
+              <button
+                class="button1"
+                style="margin-top: 10px;"
+                @click="addToFavorites(index)"
+                :class="{ 'added': selectedMovies.includes(movie.id) }"
+              >
+                {{ selectedMovies.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
+  </div>
 </template>
 <script>
 import service from '../services/movieapiservice.js'
@@ -90,6 +99,7 @@ export default {
   name: "AddFavorite",
 };
 </script>
+
 <style scoped>
 .container {
   display: flex;
@@ -155,7 +165,7 @@ export default {
 }
 
 .Title {
-  position: absolute;
+  position: fixed;
   text-align: left;
   margin: 20px;
   left: 20px;
