@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, movie_genre, movie, user_genre, genre;
+DROP TABLE IF EXISTS users, movie, user_genre, genre;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -19,6 +19,7 @@ CREATE TABLE genre (
 
 
 CREATE TABLE movie (
+    favorite_id SERIAL PRIMARY KEY,
     movie_id int,
     title varchar(100) NOT NULL,
     release_date varchar (80),
@@ -27,16 +28,8 @@ CREATE TABLE movie (
     poster_path varchar(200),
     is_favorite boolean,
     user_id int,
-    CONSTRAINT PK_movie_id PRIMARY KEY (movie_id),
     CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
 
-);
-
-CREATE TABLE movie_genre (
-    genre_id INT,
-    movie_id INT,
-    CONSTRAINT FK_movie_id FOREIGN KEY (movie_id) REFERENCES movie(movie_id),
-    CONSTRAINT FK_movie_genre_id FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
 );
 
 

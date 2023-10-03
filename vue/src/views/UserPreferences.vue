@@ -1,5 +1,15 @@
 <template>
 <div>
+    <div class="title">
+      <hr>
+      <h2> Select Up to<br>
+        Three Genres</h2>
+      <div v-show="selectedItems.length > 3" class="error-message">
+        You can only select up to three genres.
+      </div>
+      
+    <button class="submit-button" @click="createUserProfiles">SUBMIT</button>
+    </div>
     <div class="select">
       <div
         v-for="item in items"
@@ -10,17 +20,7 @@
         <span class="select__text">{{ item.name }}</span>
       </div>
     </div>
-    <div class="title">
-      <hr>
-      <h2> Select Up to 3 <br>
-       Genres</h2>
-      <div v-show="selectedItems.length > 3" class="error-message">
-      You can only select up to 3 genres.
-    </div>
-       
-      </div>
-
-    <button class="submit-button" @click="createUserProfiles">Submit</button>
+    
   </div>
 </template>
 
@@ -109,7 +109,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   max-width: 300px;
-  gap: 1px;
+  /* gap: 1px; */
   margin-left:920px;
   margin-top: 0px;
   width: 100%; 
@@ -129,7 +129,7 @@ export default {
   text-align: center;
   background: #3DCAB1;
   transition: background 0.1s;
-  opacity: 0.7;
+  opacity: 0.9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,12 +142,12 @@ export default {
 
 .select__item--selected {
   background: #BD7437;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .select__item--selected:nth-child(even) {
   background: #BD7437;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .title {
@@ -158,23 +158,23 @@ export default {
 }
 
 .submit-button {
-  width: 10%;
-  padding: 10px;
+  width: 200px;
+  padding-left: 20px;
   background-color: #3DCAB1;
   color: #f2f2f2;
   border: none;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 18px;
   margin-top: 20px;
   opacity: 0.9;
   position: absolute;
-  right: 400px;
+  /* right: 400px; */
   
 }
 
-/* .submit-button:hover {
-  background-color: #131a46;
-} */
+.submit-button:hover {
+  background-color: #BD7437;
+}
 
 .name{
   color: white;

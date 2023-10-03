@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="Title">
-      <h1> Your Favorite Movies</h1>
+      <h2> Your Favorite Movies</h2>
     </div>
     <div class="scrolling-container">
     <div class="container">
       <div class="Ultimate-grid">
-        <div class="item" v-for="movie in movies" :key= movie.id>
+        <div class="item" v-for= "movie in movies" :key= movie.id>
           <div class="content">
             <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" width="200"/>
             <h3>{{movie.title}}</h3>
@@ -32,6 +32,7 @@ data() {
         movies: []
     }
   },
+
 
   created(){
    const userId = this.$store.state.user.id

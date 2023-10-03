@@ -18,8 +18,6 @@ VALUES (200, 'Barbie', '2023-08-23', 'Barbie wants to become human', 9.5, 2, fal
 (201, 'Spider-man', '2022-05-09', 'Tom Holland takes the role of Spider-man', 9.8, 3, true),
 (202, 'Saw V', '2017-10-30', 'John Kramer is back', 7.2, 1, false);
 
-INSERT INTO movie_genre (movie_id, genre_id) VALUES (200, 1), (201, 2),(202,3);
-
 INSERT INTO user_genre(user_id, genre_id)
 VALUES(1, 1), (2, 2), (3, 3);
 

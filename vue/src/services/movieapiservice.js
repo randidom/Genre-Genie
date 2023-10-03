@@ -7,7 +7,7 @@ getAllMovies(){
 },
 // This is by genre id (not genre name)
 getMoviesByGenre(genre){
-return axios.get('/movies/genre/recs', genre)
+return axios.post('/movies/genre/recs', genre)
 },
 getMoviesByTitle(title){
 return axios.get(`/movies/titles/${title}`)
@@ -29,4 +29,7 @@ return axios.get(`/profile/genres/${userId}`)
  createNewProfile(genre) {
 return axios.post('/create', genre)
    },
+deleteMovieFromFav(userId, movieId){
+   return axios.delete(`/favorites/${userId}/${movieId}`)
+   }
 }

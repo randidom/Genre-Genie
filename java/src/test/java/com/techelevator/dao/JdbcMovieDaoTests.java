@@ -45,29 +45,14 @@ public class JdbcMovieDaoTests extends BaseDaoTests{
         assertMoviesMatch(MOVIE_2, movies.get(1));
         assertMoviesMatch(MOVIE_3, movies.get(2));
     }
-    @Test
-    public void movie_returns_correct_genre(){
-        int genreID = 2;
-        // Get the list of movies by genre ID
-        List<Movie> movies = sut.getMoviesByGenre(genreID);
-        // Iterate through the movies
-        for (Movie movie : movies) {
-            Assert.assertEquals(MOVIE_2.getTitle(), movie.getTitle());
-            //Checks and compares the titles of each movie
-        }
-        Genre genre2 = genre.getGenreById(genreID);
-        //Searches the genre given by the genre ID of Movie_2
 
-        Assert.assertEquals("Action", genre2.getGenreName());
-
-    }
 
     @Test
     public void movie_returned_by_correct_id(){
-        Movie movie = sut.getMovieById(201);
+        Movie movie = sut.getMovieById(2);
         assertMoviesMatch(movie, MOVIE_2);
 
-        Movie movie2 = sut.getMovieById(202);
+        Movie movie2 = sut.getMovieById(3);
         assertMoviesMatch(movie2, MOVIE_3);
     }
 
@@ -101,10 +86,10 @@ public class JdbcMovieDaoTests extends BaseDaoTests{
 
     @Test
     public void create_a_movie_returns_with_newId(){
-        testMovie = new Movie(203, "Test","12-11-2000", "testing to see if this creates a movie", 8.5, true, 1, "http.picture.jpg");
+        testMovie = new Movie(203, "Test","12-11-2000", "testing to see if this creates a movie", 8.5, true, 1, "http.picture.jpg", 0);
         Movie movie = sut.createFavorite(testMovie);
 
-        int newId = movie.getMovieId();
+        int newId = movie.getFavoriteId();
 
         Assert.assertTrue(newId > 0);
 

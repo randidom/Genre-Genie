@@ -25,7 +25,7 @@ h1 {
 }
 
 h2 {
-  font-size: 40px;
+  font-size: 60px;
   color:#f2f2f2;
 }
 
@@ -51,10 +51,8 @@ p {
 #nav a:hover {
   background-color: #071C42;
 }
-h2{
-  color: white;
-}
-hr{
+
+hr {
   height: 1px;
   background-color:#3DCAB1;
   opacity: 70%;
