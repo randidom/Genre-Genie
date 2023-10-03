@@ -52,7 +52,7 @@ export default {
       {name: "Thriller", id: 53},
       {name: "War", id: 10752},
       {name: "Western", id: 37},
-      {name: "None", id: null}
+      
       ],
       selectedItems: [],
       name: '',
@@ -188,5 +188,7 @@ html, body {
     max-width: 100%;
     overflow-x: hidden;
 }
+
+
 
 </style>

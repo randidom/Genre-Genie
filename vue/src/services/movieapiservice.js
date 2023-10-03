@@ -16,12 +16,10 @@ return axios.get(`/movies/titles/${title}`)
 createAFavoriteMovie(movie){
 return axios.post('/favorites', movie)
  },
+ //This will directly link up to the current user login and get their selected favorite movies that was created in the database
 getAllUserFavoriteMovies(userId){
 return axios.get(`/favorites/movies/${userId}`)
 },
-getGenreList(){
-   return axios.get('/movies/genre/list')
- },
 getGenrePreferences(userId){
 return axios.get(`/profile/genres/${userId}`)
 },
@@ -29,6 +27,7 @@ return axios.get(`/profile/genres/${userId}`)
  createNewProfile(genre) {
 return axios.post('/create', genre)
    },
+   //This will remove a user's favorite movie from the database by passing the user id attached with the movie id
 deleteMovieFromFav(userId, movieId){
    return axios.delete(`/favorites/${userId}/${movieId}`)
    }

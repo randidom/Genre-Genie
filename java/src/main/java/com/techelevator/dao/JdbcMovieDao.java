@@ -166,6 +166,23 @@ public class JdbcMovieDao implements MovieDao{
     }
 
 
+    //If a user wants to remove their favorite movie from their favorites list, this method will be used to remove that movie off our database
+    //under their desired user_id
+    @Override
+    public void deleteFavorite(int userId, int movieId) {
+        String sql = "DELETE FROM movie WHERE user_id = ? AND movie_id = ?";
+        try {
+            jdbcTemplate.update(sql, userId, movieId);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Database is down.");
+        } catch (BadSqlGrammarException e) {
+            System.out.println("SQL statement isn't working");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
+        }
+    }
+
+
     private Movie mapMovie(SqlRowSet row){
         Movie movie = new Movie();
         int movieId = row.getInt("movie_id");

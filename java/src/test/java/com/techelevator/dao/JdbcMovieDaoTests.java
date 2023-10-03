@@ -100,6 +100,8 @@ public class JdbcMovieDaoTests extends BaseDaoTests{
 
 
 
+
+
     private void assertMoviesMatch(Movie expected, Movie actual){
         Assert.assertEquals(expected.getMovieId(), actual.getMovieId());
         Assert.assertEquals(expected.getTitle(), actual.getTitle());

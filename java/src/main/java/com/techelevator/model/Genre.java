@@ -10,9 +10,13 @@ public class Genre {
     @JsonProperty("genre_ids")
     private int genreId;
 
+
+    //Genre name associated with the id
     @JsonProperty("name")
     private String genreName;
 
+
+    //Since a movie can have multiple genreId's as well as a user can have multiple genreId preferences, this will be a list
     @JsonProperty("genreIds")
     private List<Integer> genreIds = new ArrayList<>();
 

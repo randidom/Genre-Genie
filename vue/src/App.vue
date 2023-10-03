@@ -58,5 +58,30 @@ hr {
   opacity: 70%;
   border:none;
 }
+@media (max-width: 768px) {
+  h1 {
+    font-size: 40px; 
+  }
+  h2 {
+    font-size: 30px; 
+  }
+  p {
+    font-size: 5px; 
+  }
+ #nav {
+    background-color: #3DCAB1;
+    text-align: center;
+    
+    
+    
+  }
+  #nav a {
+    float: right; 
+    display: block; 
+    margin: 5px 0;
+    padding:1% 1%; 
+  }
+}
+
 
 </style>

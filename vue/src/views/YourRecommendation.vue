@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="Title">
-      <hr>
-      <h2> Movie Recommendations</h2>
+      <h1>Movie Recommendations</h1>
     </div>
     <div class="scrolling-container">
     <div class="container">
@@ -51,53 +50,61 @@ export default {
         this.movies = response.data
       })
 
-    }
-
     },
     addToFavorites(index) {
-      if (this.movies.length === 0) {
-    // Handle the case where there are no movies to add as favorites.
+if (this.movies.length === 0) {
+    //Handle the case where there are no movies to add as favorites.
     return;
   }
-   const movieId = this.movies[index].id;
-   // Updates the button text to "Added to Favorites", so it shows the user it has been already added
-      this.$forceUpdate(); // Force a re-render to update the button text
 
-  // Check if the movie ID already exists in favorites to not get an error in the backend
-  // for duplicate id's
-  if (!this.selectedMovies.includes(movieId)) {
-    const movieToAdd = {
-      id: movieId,
-      title: this.movies[index].title,
-      release_date: this.movies[index].release_date,
-      overview: this.movies[index].overview,
-      vote_average: this.movies[index].vote_average,
-      userId: this.$store.state.user.id,
-      poster_path: this.movies[index].poster_path,
-      is_favorite: true,
-    };
-    // Add the movie to favorites array
+  const movie = this.movies[index];
+  const movieId = movie.id;
+
+  if (this.selectedMovies.includes(movieId)) {
+    //If the movie is in favorites, remove it
+    const movieIndex = this.selectedMovies.indexOf(movieId);
+    this.selectedMovies.splice(movieIndex, 1);
+
+    //Remove the movie from the database
+    service.deleteMovieFromFav(this.$store.state.user.id, movieId)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Movie removed from favorites successfully");
+        } else {
+          console.error("Failed to remove movie from favorites");
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred", error);
+      });
+  } else {
+    //If the movie is not in favorites, add it
     this.selectedMovies.push(movieId);
 
- //Adds the movie info to our database
-  service.createAFavoriteMovie(movieToAdd)
-    .then((response) => {
-      if (response.status === 201) {
-        // Successfully added to favorites
-        console.log("Movie added to favorites successfully");
-      } else {
-        console.log("Failed to add movie to favorites");
-      }
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.error("Error submitting favorite, response error", error.response);
-      } else if (error.request) {
-        console.error("Server error.", error.request);
-      } else {
+    const movieToAdd = {
+      id: movieId,
+      title: movie.title,
+      release_date: movie.release_date,
+      overview: movie.overview,
+      vote_average: movie.vote_average,
+      userId: this.$store.state.user.id,
+      poster_path: movie.poster_path,
+      is_favorite: true,
+    };
+
+    //Add the movie info to our database
+    service.createAFavoriteMovie(movieToAdd)
+      .then((response) => {
+        if (response.status === 201) {
+          console.log("Movie added to favorites successfully");
+        } else {
+          console.error("Failed to add movie to favorites");
+        }
+      })
+      .catch((error) => {
         console.error("An error occurred", error);
-      }
-    });
+      });
+  }
   }
 },
   
@@ -108,37 +115,37 @@ export default {
   name: "AddFavorite",
 };
 </script>
+
 <style scoped>
+
+
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding:20px;
+  padding: 20px;
   margin: 30px;
   width: 100%;
-  min-height: 100vh; 
-  
-  
-  
-}
-.scrolling-container{
-  display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
- height:100vh; 
  
-
 }
-
+  
+.scrolling-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 .Ultimate-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
-  max-width: 100vw;
+  max-width: 100%;
   padding: 20px;
-  height: 60vh;
+
 }
 .item {
   background-color: rgba(22, 29, 117, 0.5);
@@ -158,16 +165,17 @@ export default {
   margin-top: 20px;
 }
 .button1 {
-  background-color:rgb(248, 163, 5);
-  width: 180px;
+  background-color: rgb(248, 163, 5);
+  width: auto;
+  white-space: nowrap;
   color: #000;
   font-size: 12px;
-  padding: 12px 0;
+  padding: 10px 30px;
   border: 0;
   cursor: pointer;
   border-radius: 0;
   outline: none;
-  justify-content: center; 
+  margin-left: 50%;
 }
 .button1:hover {
   background-color: rgb(223, 190, 102);
@@ -183,10 +191,39 @@ export default {
   font-size: 30px;
 }
 
-.button1.added {
+.button1.remove-favorite {
   background-color: rgb(18, 18, 49);
   color: #fff;
 }
+ @media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+  }
+  .Ultimate-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 90vw;
+    padding: 10px;
+  }
+  .Title {
+    font-size: 5px;
+    text-align: center;
+    margin: 5px;
+    left: 0;
+  }
+  .button1 {
+    width: 140px;
+    font-size: 10px;
+    padding: 8px 0;
+    margin-top: 8px;
+  }
+  .content img {
+    width: 150px;
+  }
+} 
+    
 
 </style>
 
