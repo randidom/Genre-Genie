@@ -116,6 +116,9 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .container {
   display: flex;
   justify-content: center;
@@ -132,6 +135,7 @@ export default {
   align-items: center;
   justify-content: center;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .Ultimate-grid {
@@ -160,16 +164,16 @@ export default {
   margin-top: 20px;
 }
 .button1 {
-  background-color:rgb(248, 163, 5);
-  width: 250px;
+  background-color: rgb(248, 163, 5);
+  width: auto;
+  white-space: nowrap;
   color: #000;
   font-size: 12px;
-  padding: 5px 50px;
+  padding: 10px 30px;
   border: 0;
   cursor: pointer;
   border-radius: 0;
   outline: none;
-  justify-content: center;
   margin-left: 50%;
 }
 .button1:hover {
