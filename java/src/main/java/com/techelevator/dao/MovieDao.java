@@ -20,5 +20,6 @@ public interface MovieDao {
     //Grabs only the users favorite movies that the selected, specific by the userId
     Movie createFavorite(Movie movie);
     //If the user selects a movie to favorite, this will create the movie into our own database and set the favorite status to true
+    void deleteFavorite(int userId, int movieId);
 
 }

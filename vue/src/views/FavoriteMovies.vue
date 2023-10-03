@@ -6,7 +6,7 @@
     <div class="scrolling-container">
     <div class="container">
       <div class="Ultimate-grid">
-        <div class="item" v-for= "movie in movies" :key= movie.id>
+        <div class="item" v-for="(movie, index) in movies" :key= "movie.id">
           <div class="content">
             <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" width="200"/>
             <h3>{{movie.title}}</h3>
@@ -16,6 +16,7 @@
           <br />
           <h5>Rating: {{ movie.vote_average }} / 10</h5>
            </div>
+           <button class="remove" @click="removeFromFavorites(index)"> Remove From Favorites </button>
           </div>
           </div>
           </div>
@@ -32,6 +33,30 @@ data() {
         movies: []
     }
   },
+  methods: {
+    removeFromFavorites(index){
+      const userId = this.$store.state.user.id;
+      const movieId = this.movies[index].id;
+      if (userId !== undefined && movieId !== undefined) {
+      service.deleteMovieFromFav(userId, movieId).then(
+        (response) => {
+          if (response.status === 200) {
+          //Remove the deleted movie from the array
+          //This will prevent the page from having to reload with the movie missing and will now just remove it
+          //from the line up of movies
+          this.movies.splice(index, 1);
+        } else {
+          console.error("Failed to remove movie from favorites");
+        }
+      }).catch((error) => {
+        console.error("An error occurred", error);
+      
+        }
+      
+      )
+      }
+    }
+  },
 
 
   created(){
@@ -39,7 +64,6 @@ data() {
           service.getAllUserFavoriteMovies(userId).then(
               (response) => {
                 if (response.status === 200) {
-                  console.log(response.data)
                    this.movies = response.data;
                        
         console.log("Movie favorites have loaded ");
@@ -86,3 +110,4 @@ data() {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
   max-width: 100vw;
+}
