@@ -12,9 +12,7 @@
             <h3>{{movie.title}}</h3>
             <br>{{movie.overview}}
             <br />
-          <h5>Release Date: {{ movie.release_date }}</h5>
           <br />
-          <h5>Rating: {{ movie.vote_average }} / 10</h5>
            </div>
            <button class="remove" @click="removeFromFavorites(index)"> Remove From Favorites </button>
           </div>
@@ -100,7 +98,6 @@ data() {
  flex-direction: column;
  align-items: center;
  justify-content: center;
- height:100vh;
 }
 .Ultimate-grid {
   display: grid;
@@ -108,7 +105,6 @@ data() {
   gap: 60px;
   max-width: 100vw;
   padding: 20px;
-  height: 60vh;
 }
 .item {
   background-color: rgba(22, 29, 117, 0.5);
@@ -124,7 +120,6 @@ data() {
   padding: 20px;
 }
 .Title {
-  position: absolute;
   text-align: left;
   margin: 20px;
   left: 20px;
