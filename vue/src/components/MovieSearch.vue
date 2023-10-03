@@ -1,21 +1,18 @@
 <template>
   <div class="container">
     <h2>Movie Search by Title</h2>
-    <input class="input" v-model="title" type="text" placeholder="Enter Title" />
+    <div class="search-bar">
+      <input class="input" v-model="title" type="text" placeholder="Enter Title" />
+      <button class="search-button" @click="searchMoviesByTitle">Search</button>
+    </div>
     <div v-show="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <button class="search-button" @click="searchMoviesByTitle">Search</button>
     <div class="movie-list">
-      
-      <!-- Use a separate grid for each movie -->
       <div v-for="(movie, index) in movies" :key="movie.id" class="movie-container">
         <div class="content">
           <img :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" />
-          <h4 class="movie-title">{{ movie.title }}</h4> <!-- Apply margin or padding to the movie title -->
+          <h4 class="movie-title">{{ movie.title }}</h4>
           <h5>{{ movie.overview }}</h5>
           <br />
-          <h5>Release Date: {{ movie.release_date }}</h5>
-          <br />
-          <h5>Rating: {{ movie.vote_average }} / 10</h5>
            </div>
         <div class="button-container">
           <button class="favorite-button" @click.prevent="addMovieToFavorites(index)" :class="{ 'added': favorites.includes(movie.id) }">
@@ -117,15 +114,17 @@ export default {
   max-width: 1700px;
   position: absolute;
   top: 20%;
-  left: 50%;
+  left: 45%;
   transform: translate(-50%, -50%);
-  /* font-family: monospace; */
   font-size: 20px;
   color:#fff;
-  
-
 }
-
+.search-bar {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  margin-bottom: 20px;
+}
 .input{
   color: #fff;
   text-align: center;
@@ -134,7 +133,8 @@ export default {
   display: block;
   font-family: monospace;
   font-size: 25px;
-
+    flex: 1;
+ margin-bottom: 2px;
 }
 
 .movie-list {
@@ -147,7 +147,9 @@ export default {
   margin-top: 20px;
   right: 0px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 60px ;
+  gap: 60px;
+  margin-top: 10%;
+margin-right: -5%;
 }
 
 .movie-container {
@@ -168,7 +170,7 @@ export default {
 
 }
 .movie-title {
-  margin-bottom: 50px; /* Adjust the value as needed */
+  margin-bottom: 50px;
 }
 .movie-details {
   padding: 40px;
@@ -186,11 +188,13 @@ export default {
 }
 
 .search-button {
-  width: 25%;
-  font-size: 20px;
+  width: 30%;
+  font-size: 16px;
   background-color:rgb(248, 163, 5);
   margin-top: 15px;
   border-radius: 0px;
+  margin-left: 30px;
+  display: inline-block;
 }
 .search-button:hover{
   background-color: rgb(18, 18, 49);
@@ -207,7 +211,8 @@ export default {
   cursor: pointer;
   border-radius: 0;
   outline: none;
-  justify-content: center; 
+  justify-content: center;
+  text-align: center;
 }
 
 .button-container {
