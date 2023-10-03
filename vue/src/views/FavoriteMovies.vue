@@ -86,30 +86,3 @@ data() {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
   max-width: 100vw;
-  padding: 20px;
-  height: 60vh;
-}
-.item {
-  background-color: rgba(22, 29, 117, 0.5);
-  color: white;
-  border-radius: 10px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-.content {
-  padding: 20px;
-}
-
-
-.Title {
-  position: absolute;
-  text-align: left;
-  margin: 20px;
-  left: 20px;
-  color: white;
-  font-size: 30px;
-}
-</style>
