@@ -113,6 +113,12 @@ public class MovieController {
         return movieDao.getFavoriteMovies(userId);
     }
 
+    //This method will grab the movie from the associated user_id and delete it, if a user wants to remove it from their favorites
+    @RequestMapping(path = "/favorites/{userId}/{movieId}", method = RequestMethod.DELETE )
+    public void deleteFavoriteMovie(@PathVariable int userId, @PathVariable int movieId){
+        movieDao.deleteFavorite(userId, movieId);
+    }
+
 
 
 }
