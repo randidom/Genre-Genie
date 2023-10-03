@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.MovieDao;
+import com.techelevator.model.Genre;
 import com.techelevator.model.Movie;
 import com.techelevator.model.Response;
 import com.techelevator.model.Results;
@@ -14,10 +15,12 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(value="http://localhost:8080")
 //@PreAuthorize("isAuthenticated()")
 public class MovieController {
 
@@ -52,8 +55,9 @@ public class MovieController {
         }
     }
 
-    @RequestMapping(path = "/movies/genre/{genre}", method = RequestMethod.GET)
-    public List<Results> getMoviesBySelectedGenre(@PathVariable int genre) {
+    @RequestMapping(path = "/movies/genre/recs", method = RequestMethod.POST)
+    public List<Results> getMoviesBySelectedGenre(@Valid @RequestBody Genre genre) {
+
         List<Results> movies = new ArrayList<>();
         HttpHeaders header = new HttpHeaders();
 
@@ -61,11 +65,11 @@ public class MovieController {
 
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity entity = new HttpEntity<>(header);
-
-        Response response = restTemplate.exchange("https://api.themoviedb.org/3/discover/movie?with_genres=" + genre, HttpMethod.GET, entity, Response.class).getBody();
-        movies = response.getAllMovies();
-
-        if (movies == null) {
+        for(Integer id: genre.getGenreIds()) {
+            Response response = restTemplate.exchange("https://api.themoviedb.org/3/discover/movie?with_genres=" + id, HttpMethod.GET, entity, Response.class).getBody();
+            movies.addAll(response.getAllMovies());
+        }
+        if (movies.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movies are not found for this genre.");
         } else {
             return movies;
@@ -105,7 +109,7 @@ public class MovieController {
 
     //This method will grab the movies in the movie table from the method above and grab the user favorite movies
     @RequestMapping(path = "/favorites/movies/{userId}", method = RequestMethod.GET)
-    public Movie getUserFavoriteMovies(int userId) {
+    public List<Movie> getUserFavoriteMovies(@PathVariable int userId) {
         return movieDao.getFavoriteMovies(userId);
     }
 

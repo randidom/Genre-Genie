@@ -9,15 +9,15 @@
       </div>
     </header>  
 
-    <main>
+    <!-- <main> -->
       <div class="about">
       <h1>GENRE GENIE</h1>
       <hr>
       <p class="about-text">
-        Welcome to Cap Movies, your go-to movie destination! We specialize in curating personalized movie recommendations tailored to your unique taste. Whether you're a fan of action-packed blockbusters, heartwarming rom-coms, or mind-bending sci-fi, we've got the perfect movie for you. Join our community of movie lovers and never miss a great film again. Register now and embark on a cinematic journey like never before – your next favorite movie is just a click away.
+        Welcome to Genre Genie, your go-to movie destination! We specialize in curating personalized movie recommendations tailored to your unique taste. Whether you're a fan of action-packed blockbusters, heartwarming rom-coms, or mind-bending sci-fi, we've got the perfect movie for you. Join our community of movie lovers and never miss a great film again. Register now and embark on a cinematic journey like never before – your next favorite movie is just a click away.
       </p>
       </div>
-    </main>  
+    <!-- </main>   -->
   </body>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style>
-/* .container {
+.container {
   display: grid;
   grid-template-columns: 3 fr 1fr;
   grid-template-areas: 
@@ -41,7 +41,7 @@ header{
   display: flex;
   justify-content: flex-end;
 }
-
+/* 
 main {
   grid-area: about;
   display: flex;
@@ -80,7 +80,7 @@ main {
   /* padding: 10px; */
 }
 
-hr{
+hr {
   height: 1px;
   background-color:#3DCAB1;
   opacity: 70%;
@@ -106,7 +106,7 @@ hr{
   /* border-radius: 5px; */
   cursor: pointer;
   margin-right: 10px;
-  transition: background-color 0.3s ease;
+  /* transition: background-color 0.3s ease; */
 }
 
 .button:hover {

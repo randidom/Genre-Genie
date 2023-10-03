@@ -5,19 +5,23 @@
     <div v-show="errorMessage" class="error-message">{{ errorMessage }}</div>
     <button class="search-button" @click="searchMoviesByTitle">Search</button>
     <div class="movie-list">
-      <div class="movie-container"  v-for="(movie,index) in movies" :key="movie.id">
-        <div class="movie-details" >
-          <h4>{{ movie.title }}</h4>
+      
+      <!-- Use a separate grid for each movie -->
+      <div v-for="(movie, index) in movies" :key="movie.id" class="movie-container">
+        <div class="content">
           <img :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" />
+          <h4 class="movie-title">{{ movie.title }}</h4> <!-- Apply margin or padding to the movie title -->
           <h5>{{ movie.overview }}</h5>
           <br />
           <h5>Release Date: {{ movie.release_date }}</h5>
           <br />
           <h5>Rating: {{ movie.vote_average }} / 10</h5>
-        </div>
-        <button class="favorite-button" @click.prevent="addMovieToFavorites(index)" :class="{ 'added': favorites.includes(movie.id) }">
+           </div>
+        <div class="button-container">
+          <button class="favorite-button" @click.prevent="addMovieToFavorites(index)" :class="{ 'added': favorites.includes(movie.id) }">
             {{ favorites.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
-    </button>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -67,6 +71,7 @@ export default {
       overview: this.movies[index].overview,
       vote_average: this.movies[index].vote_average,
       userId: this.$store.state.user.id,
+      poster_path: this.movies[index].poster_path,
       is_favorite: true,
       
       
@@ -87,6 +92,7 @@ export default {
       }
     })
     .catch((error) => {
+      
       if (error.response) {
         console.error("Error submitting favorite, response error", error.response);
       } else if (error.request) {
@@ -104,21 +110,20 @@ export default {
 <style scoped>
 
 .container {
-  background-color: rgba(22, 29, 117, 0.5);
   text-align: center;
   padding: 20px;
   margin: 0 auto;
   width: 90%;
   max-width: 1700px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   position: absolute;
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  backdrop-filter: blur(30px);
-  font-family: monospace;
+  /* font-family: monospace; */
   font-size: 20px;
   color:#fff;
+  
+
 }
 
 .input{
@@ -127,10 +132,13 @@ export default {
   width: 50%;
   margin: auto;
   display: block;
+  font-family: monospace;
+  font-size: 25px;
+
 }
 
 .movie-list {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
   justify-content: space-between;
   position: fixed;
@@ -138,33 +146,43 @@ export default {
   width: 100%;
   margin-top: 20px;
   right: 0px;
-  background-color: rgb(118, 228, 255);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 60px ;
 }
 
 .movie-container {
-  flex-basis: calc(20% - 0px);
+  flex-basis: calc(20% - 10px);
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 0 0 5px rgba(44, 43, 43, 0.1);
   background-color: rgb(22, 28, 117);
-  border: 1px solid black;
   color: #d5e9fd;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 100;
+  background-color:  rgba(22, 29, 117, 0.5); 
+  padding: 50px;
+  border-radius: 5px; 
+  justify-content: space-between;
+  height: 100%;
+
+}
+.movie-title {
+  margin-bottom: 50px; /* Adjust the value as needed */
+}
+.movie-details {
+  padding: 40px;
+  text-align: center;
 }
 
-.movie-details {
-  padding: 10px;
-  text-align: left;
-}
+
 
 .movie-details h4 {
   margin: 0;
 }
 
 .movie-container img {
-  max-width: 100%;
+  max-width: 75%;
 }
 
 .search-button {
@@ -180,15 +198,22 @@ export default {
 }
 
 .favorite-button {
-  background-color: rgb(248, 163, 5);
-  color: rgb(18, 20, 51);
-  padding: 5px 10px;
-  border: none;
+  background-color:rgb(248, 163, 5);
+  width: 180px;
+  color: #000;
+  font-size: 12px;
+  padding: 12px 0;
+  border: 0;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 13px;
   border-radius: 0;
-  margin-top: auto; 
+  outline: none;
+  justify-content: center; 
+}
+
+.button-container {
+  justify-content: space-around;
+  display: flex-end;
+  margin-top: 20px;
 }
 
 .favorite-button:hover {

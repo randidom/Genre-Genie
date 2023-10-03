@@ -25,7 +25,7 @@ public class JdbcMovieDao implements MovieDao{
     @Override
     public List<Movie> findAllMovies() {
         //Sql statements selects all columns in the movie table to show all movies and their info
-        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id FROM movie;";
+        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id, poster_path, favorite_id FROM movie;";
         List<Movie> results = new ArrayList<>();
 
         try{
@@ -51,7 +51,7 @@ public class JdbcMovieDao implements MovieDao{
         List<Movie> results = new ArrayList<>();
         //Since the genreID is a foreign key on the movie table, have to join the genre table for where that foreign key/primary key meet to find the name of the genreId
         //associated with that movie
-        String sql = "SELECT movie.movie_id AS movie_id, title, release_date, overview, vote_average, user_id, is_favorite FROM movie " +
+        String sql = "SELECT movie.movie_id AS movie_id, title, release_date, overview, vote_average, user_id, is_favorite, poster_path, favorite_id FROM movie " +
                 "JOIN movie_genre ON movie.movie_id = movie_genre.movie_id WHERE movie_genre.genre_id = ?;";
         try {
             SqlRowSet queryForRowSet = jdbcTemplate.queryForRowSet(sql, genre);
@@ -73,7 +73,7 @@ public class JdbcMovieDao implements MovieDao{
     @Override
     public Movie findMovieByTitle(String title) {
         Movie movie = null;
-        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id FROM movie " +
+        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id, poster_path, favorite_id FROM movie " +
                 "WHERE title LIKE ?";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, title);
@@ -96,8 +96,8 @@ public class JdbcMovieDao implements MovieDao{
     @Override
     public Movie getMovieById(int id) {
         Movie movie = null;
-        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id FROM movie " +
-                "WHERE movie_id = ?;";
+        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id, poster_path, favorite_id FROM movie " +
+                "WHERE favorite_id = ?;";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             if(results.next()){
@@ -116,15 +116,16 @@ public class JdbcMovieDao implements MovieDao{
 
 
     @Override
-    public Movie getFavoriteMovies(int userId) {
-        //This will only select movies if they are favorite(d) by the user
-        Movie movie = null;
-        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id FROM movie WHERE is_favorite = true AND user_id = ?;";
+    public List<Movie> getFavoriteMovies(int userId) {
+        //This will only select movies if they are favorite(d) by the user\
+
+        List<Movie> results = new ArrayList<>();
+        String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id, poster_path, favorite_id FROM movie WHERE is_favorite = true AND user_id = ?;";
         try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            SqlRowSet queryResults = jdbcTemplate.queryForRowSet(sql, userId);
             //Users can have multiple favorite movies selected
-            while(results.next()){
-                movie = mapMovie(results);
+            while(queryResults.next()){
+                results.add(mapMovie(queryResults));
             }
         }catch (CannotGetJdbcConnectionException e) {
         System.out.println("Database is down.");
@@ -134,7 +135,7 @@ public class JdbcMovieDao implements MovieDao{
          }catch (DataIntegrityViolationException e){
         System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
          }
-        return movie;
+        return results;
 
     }
 
@@ -143,13 +144,14 @@ public class JdbcMovieDao implements MovieDao{
         Movie favoriteMovie = null;
         //This is essentially inserting the movie from the external API from the database since the user favorites it and we want to retrieve it later on
         //We are inserting the movie_id because the external API already has movie_id's associated with them
-        String sql = "INSERT INTO movie (movie_id, title, release_date, overview, vote_average, user_id, is_favorite) VALUES (?,?,?,?,?,?,true) RETURNING movie_id";
-                int movieId = 0;
+        String sql = "INSERT INTO movie (movie_id, title, release_date, overview, vote_average, user_id, poster_path, is_favorite) VALUES (?,?,?,?,?,?,?,true) RETURNING favorite_id";
+                int favorite = 0;
+
         try {
-             movieId = jdbcTemplate.queryForObject(sql, int.class, movie.getMovieId() , movie.getTitle(), movie.getReleaseDate(), movie.getOverview(), movie.getVoteAverage(), movie.getUserId());
+             favorite = jdbcTemplate.queryForObject(sql, int.class, movie.getMovieId() , movie.getTitle(), movie.getReleaseDate(), movie.getOverview(), movie.getVoteAverage(), movie.getUserId(), movie.getPosterPath());
             //Since this is creating a favorite movie, the boolean has to be true
            if(movie.isFavorite() == true) {
-                   favoriteMovie = getMovieById(movieId);
+                   favoriteMovie = getMovieById(favorite);
 
                }
         } catch (CannotGetJdbcConnectionException e) {
@@ -158,11 +160,11 @@ public class JdbcMovieDao implements MovieDao{
             System.out.println("SQL statement isn't working");
         } catch (DataIntegrityViolationException e) {
             System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
-            e.printStackTrace();
         }
 
         return favoriteMovie;
     }
+
 
     private Movie mapMovie(SqlRowSet row){
         Movie movie = new Movie();
@@ -173,8 +175,10 @@ public class JdbcMovieDao implements MovieDao{
         double voteAverage = row.getDouble("vote_average");
         boolean isFavorite = row.getBoolean("is_favorite");
         int userId = row.getInt("user_id");
+        String posterPath = row.getString("poster_path");
+        int favoriteId = row.getInt("favorite_id");
 
-        movie = new Movie(movieId, title, releaseDate, overview, voteAverage, isFavorite, userId);
+        movie = new Movie(movieId, title, releaseDate, overview, voteAverage, isFavorite, userId, posterPath, favoriteId);
         return movie;
     }
 }

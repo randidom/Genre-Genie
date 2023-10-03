@@ -1,9 +1,9 @@
 <template>
 
   <div id="login">
-    <hr>
     <form @submit.prevent="login">
-      <h3 >Have An Account? Please Sign In</h3>
+      <hr>
+      <h2>Sign In</h2>
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
       </div>
@@ -18,7 +18,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
-      <button type="submit">Sign in</button>
+      <button type="submit">SIGN IN</button>
       <p>
       <router-link :to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
     </form>
@@ -49,7 +49,12 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/recommendation");
+            if(this.$store.state.user.isActivated){
+              this.$router.push('/recommendation');
+            
+            } else {
+            this.$router.push("/preferences");
+            }
           }
         })
         .catch(error => {
@@ -74,8 +79,9 @@ export default {
     box-sizing: border-box;
 }
 body{
-    background-image: url("../assets/movie-background-collage.jpg");
-    background-size: 2500px 2000px;
+    background: url("../assets/movie-background-collage.jpg") #3DCAB1;
+    background-size: cover;
+    background-blend-mode: multiply;
 }
 .background{
     width: 430px;
@@ -93,19 +99,24 @@ body{
 }
 
 form{
-    height: 520px;
-    width: 400px;
+    /* height: 520px; */
+    width: 450px;
     /* background-color: rgba(255,255,255,0.13); */
     position: absolute;
     transform: translate(-50%,-50%);
     top: 40%;
-    left: 75%;
+    left: 70%;
     border-radius: 10px;
     /* backdrop-filter: blur(10px); */
     /* border: 2px solid rgba(255,255,255,0.1); */
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    /* box-shadow: 0 0 40px rgba(8,7,16,0.6); */
     padding: 50px 35px;
 }
+
+form #create-account{
+  width: 600px;
+}
+
 form *{
     font-family: 'Poppins',sans-serif;
     color: #ffffff;
@@ -136,6 +147,7 @@ input{
     margin-top: 8px;
     font-size: 14px;
     font-weight: 400;
+    padding: 10px;
     background: transparent;
     box-sizing: border-box;
     border: 5px solid;
@@ -144,7 +156,7 @@ input{
 }
 
 button{
-    margin-top: 20px;
+    margin-top: 40px;
     width: 100%;
     background-color: #3DCAB1;
     color: #f2f2f2;
@@ -154,11 +166,18 @@ button{
     /* border-radius: 5px; */
     cursor: pointer;
     /* opacity: 70%; */
+    text-align: left;
+    padding-left: 20px;
 }
 
 p{
   position: relative;
 top:20px;
+}
+
+hr {
+  width: 600px;  
+  margin-bottom: 50px;
 }
 
 </style>

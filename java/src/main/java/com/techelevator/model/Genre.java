@@ -1,7 +1,9 @@
 package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.relational.core.sql.In;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Genre {
@@ -11,6 +13,17 @@ public class Genre {
     @JsonProperty("name")
     private String genreName;
 
+    @JsonProperty("genreIds")
+    private List<Integer> genreIds = new ArrayList<>();
+
+
+    public List<Integer> getGenreIds() {
+        return genreIds;
+    }
+
+    public void setGenreIds(List<Integer> genreIds) {
+        this.genreIds = genreIds;
+    }
 
     private int userId;
     //Constructor without ID since it will serialize with need genre's implemented
@@ -18,7 +31,7 @@ public class Genre {
         this.genreName = genreName;
     }
 
-    public Genre(int genreId, String genreName) {
+    public Genre(int  genreId, String genreName) {
         this.genreId = genreId;
         this.genreName = genreName;
     }
