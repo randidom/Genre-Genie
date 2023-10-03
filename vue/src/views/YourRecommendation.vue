@@ -31,7 +31,7 @@ export default {
     return {
       movies: [],
       selectedMovies: [], // New data property to store selected movies
-      genreIds: []
+      genre: {}
 
     }
   },
@@ -39,14 +39,19 @@ export default {
     recomendations() {
        const userId = this.$store.state.user.id;
       service.getGenrePreferences(userId).then(response => {
-        this.genreIds = response.data;
-        const genre = {
-        genreIds: this.genreIds,
-      }
-      service.getMoviesByGenre(genre).then(response => {
+        this.genre = response.data;
+        console.log(response.data);
+        this.getGenrePreferences();
+        
+      })
+    },
+    getGenrePreferences(){
+      service.getMoviesByGenre(this.genre).then(response => {
         this.movies = response.data
       })
-      })
+
+    }
+
     },
     addToFavorites(index) {
       if (this.movies.length === 0) {
@@ -93,11 +98,11 @@ export default {
       }
     });
   }
-}
-    
-  },
+},
+  
   created() {
     this.recomendations();
+  
   },
   name: "AddFavorite",
 };
@@ -110,7 +115,8 @@ export default {
   padding:20px;
   margin: 30px;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100vh; 
+  
   
   
 }
@@ -119,7 +125,8 @@ export default {
  flex-direction: column;
  align-items: center;
  justify-content: center;
- height:100vh;
+ height:100vh; 
+ 
 
 }
 
@@ -167,7 +174,7 @@ export default {
 }
 
 .Title {
-  position: absolute;
+  position: sticky;
   text-align: left;
   margin: 20px;
   left: 20px;

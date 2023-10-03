@@ -70,8 +70,9 @@ public class JdbcGenreDao implements GenreDao{
     @Override
     public Genre getGenrePreferences(int id) {
         Genre genre = null;
+        List<Integer> genreList = new ArrayList<>();
         String sql = "SELECT user_genre.genre_id, genre_name, user_id FROM user_genre JOIN genre ON" +
-                " genre.genre_Id = user_genre.genre_id WHERE user_id = ?";
+                " genre.genre_id = user_genre.genre_id WHERE user_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             while (results.next()) {
@@ -79,7 +80,9 @@ public class JdbcGenreDao implements GenreDao{
                 int genreId = results.getInt("genre_id");
                 int userId = results.getInt("user_id");
                 genre = new Genre(genreId, userId);
+                genreList.add(genreId);
             }
+            genre.setGenreIds(genreList);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Database is down.");
 

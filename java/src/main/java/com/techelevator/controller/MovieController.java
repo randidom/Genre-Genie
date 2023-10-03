@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(value="http://localhost:8080")
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class MovieController {
 
     @Autowired
@@ -55,8 +55,8 @@ public class MovieController {
         }
     }
 
-    @RequestMapping(path = "/movies/genre/recs", method = RequestMethod.GET)
-    public List<Results> getMoviesBySelectedGenre(@RequestBody @Valid Genre genre) {
+    @RequestMapping(path = "/movies/genre/recs", method = RequestMethod.POST)
+    public List<Results> getMoviesBySelectedGenre(@Valid @RequestBody Genre genre) {
 
         List<Results> movies = new ArrayList<>();
         HttpHeaders header = new HttpHeaders();
@@ -65,7 +65,7 @@ public class MovieController {
 
         header.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity entity = new HttpEntity<>(header);
-        for(int id: genre.getGenreIds()) {
+        for(Integer id: genre.getGenreIds()) {
             Response response = restTemplate.exchange("https://api.themoviedb.org/3/discover/movie?with_genres=" + id, HttpMethod.GET, entity, Response.class).getBody();
             movies.addAll(response.getAllMovies());
         }

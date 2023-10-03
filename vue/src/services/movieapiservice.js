@@ -7,7 +7,7 @@ getAllMovies(){
 },
 // This is by genre id (not genre name)
 getMoviesByGenre(genre){
-return axios.get('/movies/genre/recs', genre)
+return axios.post('/movies/genre/recs', genre)
 },
 getMoviesByTitle(title){
 return axios.get(`/movies/titles/${title}`)

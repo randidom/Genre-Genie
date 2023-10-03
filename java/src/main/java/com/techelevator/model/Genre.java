@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.relational.core.sql.In;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,9 @@ public class Genre {
     @JsonProperty("name")
     private String genreName;
 
+    @JsonProperty("genreIds")
     private List<Integer> genreIds = new ArrayList<>();
+
 
     public List<Integer> getGenreIds() {
         return genreIds;
