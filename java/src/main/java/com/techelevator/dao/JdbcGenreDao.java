@@ -25,6 +25,8 @@ public class JdbcGenreDao implements GenreDao{
 
     }
 
+
+    //This will just get a list from our database of the genre_id's and the name of the genre attached to it
     @Override
     public List<Genre> getAllGenres() {
         String sql = "SELECT genre_id, genre_name FROM genre;";
@@ -47,6 +49,8 @@ public class JdbcGenreDao implements GenreDao{
 
     }
 
+
+    //This will get the genre name associated with the id in our database. This method won't really be used unless we want to the id by the name
     @Override
     public Genre getGenreById(int id) {
         Genre genre = null;
@@ -67,6 +71,11 @@ public class JdbcGenreDao implements GenreDao{
         return genre;
     }
 
+
+    //This method will be used to find the genre_id's associated with the user_id after they are done
+    //selecting their genre preferences.
+    //This method will connect to the external API in the front end and connect the genre id's based
+    //on the user profile to the matching movie's that have those genre_ids
     @Override
     public Genre getGenrePreferences(int id) {
         Genre genre = null;
@@ -95,6 +104,11 @@ public class JdbcGenreDao implements GenreDao{
         return genre;
     }
 
+
+    //This method will be used when after a user registers and logins in, they will be prompted to select
+    // their genre preferences, which will be tied based of the user_id
+    //Users can have multiple genre_id's associated with one single user_id
+
     @Override
     public void addGenresToUser(Genre genre, Principal principal) {
         String sql2 = "UPDATE users SET is_activated = true WHERE username = ?";
@@ -116,8 +130,7 @@ public class JdbcGenreDao implements GenreDao{
         }
   }
 
-
-
+    //Mapping method will tie to the constructor used in our model class to the sql tables
     private Genre mapGenre(SqlRowSet row){
         Genre genre = new Genre();
         int genreId = row.getInt("genre_id");

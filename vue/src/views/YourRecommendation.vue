@@ -21,9 +21,9 @@
                 class="button1"
                 style="margin-top: 10px;"
                 @click="addToFavorites(index)"
-                :class="{ 'added': selectedMovies.includes(movie.id) }"
-              >
-                {{ selectedMovies.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+                :class="{ 'remove-favorite': selectedMovies.includes(movie.id) }"
+      >
+        {{ selectedMovies.includes(movie.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
               </button>
             </div>
           </div>
@@ -60,49 +60,58 @@ export default {
 
     },
     addToFavorites(index) {
-      if (this.movies.length === 0) {
-    // Handle the case where there are no movies to add as favorites.
+if (this.movies.length === 0) {
+    //Handle the case where there are no movies to add as favorites.
     return;
   }
-   const movieId = this.movies[index].id;
-   // Updates the button text to "Added to Favorites", so it shows the user it has been already added
-      this.$forceUpdate(); // Force a re-render to update the button text
 
-  // Check if the movie ID already exists in favorites to not get an error in the backend
-  // for duplicate id's
-  if (!this.selectedMovies.includes(movieId)) {
-    const movieToAdd = {
-      id: movieId,
-      title: this.movies[index].title,
-      release_date: this.movies[index].release_date,
-      overview: this.movies[index].overview,
-      vote_average: this.movies[index].vote_average,
-      userId: this.$store.state.user.id,
-      poster_path: this.movies[index].poster_path,
-      is_favorite: true,
-    };
-    // Add the movie to favorites array
+  const movie = this.movies[index];
+  const movieId = movie.id;
+
+  if (this.selectedMovies.includes(movieId)) {
+    //If the movie is in favorites, remove it
+    const movieIndex = this.selectedMovies.indexOf(movieId);
+    this.selectedMovies.splice(movieIndex, 1);
+
+    //Remove the movie from the database
+    service.deleteMovieFromFav(this.$store.state.user.id, movieId)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Movie removed from favorites successfully");
+        } else {
+          console.error("Failed to remove movie from favorites");
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred", error);
+      });
+  } else {
+    //If the movie is not in favorites, add it
     this.selectedMovies.push(movieId);
 
- //Adds the movie info to our database
-  service.createAFavoriteMovie(movieToAdd)
-    .then((response) => {
-      if (response.status === 201) {
-        // Successfully added to favorites
-        console.log("Movie added to favorites successfully");
-      } else {
-        console.log("Failed to add movie to favorites");
-      }
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.error("Error submitting favorite, response error", error.response);
-      } else if (error.request) {
-        console.error("Server error.", error.request);
-      } else {
+    const movieToAdd = {
+      id: movieId,
+      title: movie.title,
+      release_date: movie.release_date,
+      overview: movie.overview,
+      vote_average: movie.vote_average,
+      userId: this.$store.state.user.id,
+      poster_path: movie.poster_path,
+      is_favorite: true,
+    };
+
+    //Add the movie info to our database
+    service.createAFavoriteMovie(movieToAdd)
+      .then((response) => {
+        if (response.status === 201) {
+          console.log("Movie added to favorites successfully");
+        } else {
+          console.error("Failed to add movie to favorites");
+        }
+      })
+      .catch((error) => {
         console.error("An error occurred", error);
-      }
-    });
+      });
   }
   }
 },
@@ -190,7 +199,7 @@ export default {
   font-size: 30px;
 }
 
-.button1.added {
+.button1.remove-favorite {
   background-color: rgb(18, 18, 49);
   color: #fff;
 }
