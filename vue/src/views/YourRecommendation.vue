@@ -58,8 +58,6 @@ export default {
         this.movies = response.data
       })
 
-    }
-
     },
     addToFavorites(index) {
       if (this.movies.length === 0) {
@@ -105,6 +103,7 @@ export default {
         console.error("An error occurred", error);
       }
     });
+  }
   }
 },
   
