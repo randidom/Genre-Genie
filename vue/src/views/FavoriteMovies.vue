@@ -94,7 +94,6 @@ data() {
   margin: 30px;
   width: 100%;
   min-height: 100vh;
-  
 }
 .scrolling-container{
   display: flex;
@@ -102,12 +101,48 @@ data() {
  align-items: center;
  justify-content: center;
  height:100vh;
-
 }
-
 .Ultimate-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
   max-width: 100vw;
+  padding: 20px;
+  height: 60vh;
 }
+.item {
+  background-color: rgba(22, 29, 117, 0.5);
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.content {
+  padding: 20px;
+}
+.Title {
+  position: absolute;
+  text-align: left;
+  margin: 20px;
+  left: 20px;
+  color: white;
+  font-size: 30px;
+}
+.remove{
+  background-color:rgb(248, 163, 5);
+  width: 180px;
+  color: #000;
+  font-size: 12px;
+  padding: 12px 0;
+  border: 0;
+  cursor: pointer;
+  border-radius: 0;
+  outline: none;
+  justify-content: center;
+  display: flex;
+  align-self: center;
+}
+</style>
