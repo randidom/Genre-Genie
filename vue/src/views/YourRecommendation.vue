@@ -1,28 +1,36 @@
 <template>
   <div>
     <div class="Title">
-      <hr>
-      <h2> Movie Recommendations</h2>
+      <h1>Movie Recommendations</h1>
     </div>
     <div class="scrolling-container">
-    <div class="container">
-      <div class="Ultimate-grid">
-        <div class="item" v-for="(movie, index) in movies" :key= "movie.id">
-          <div class="content">
-            <img v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" alt="movie poster" width="200"/>
-            <h3>{{movie.title}}</h3>
-            <br>{{movie.overview}}
-          </div>
-          <div class="button-container">
-            <button class="button1" style="margin-top: 10px;" @click="addToFavorites(index)" :class="{ 'added': selectedMovies.includes(movie.id) }">
-            {{ selectedMovies.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
-            </button>
-          </div>
+      <div class="container">
+        <div class="Ultimate-grid">
+          <div class="item" v-for="(movie, index) in movies" :key="movie.id">
+            <div class="content">
+              <img
+                v-bind:src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+                alt="movie poster"
+                width="200"
+              />
+              <h3>{{ movie.title }}</h3>
+              <br>{{ movie.overview }}
+            </div>
+            <div class="button-container">
+              <button
+                class="button1"
+                style="margin-top: 10px;"
+                @click="addToFavorites(index)"
+                :class="{ 'added': selectedMovies.includes(movie.id) }"
+              >
+                {{ selectedMovies.includes(movie.id) ? 'Added to Favorites' : 'Add to Favorites' }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
+  </div>
 </template>
 <script>
 import service from '../services/movieapiservice.js'
@@ -106,37 +114,33 @@ export default {
   name: "AddFavorite",
 };
 </script>
+
 <style scoped>
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding:20px;
+  padding: 20px;
   margin: 30px;
   width: 100%;
-  min-height: 100vh; 
-  
-  
-  
-}
-.scrolling-container{
-  display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
- height:100vh; 
  
-
 }
-
+  
+.scrolling-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
 
 .Ultimate-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 60px;
-  max-width: 100vw;
+  max-width: 100%;
   padding: 20px;
-  height: 60vh;
+
 }
 .item {
   background-color: rgba(22, 29, 117, 0.5);
@@ -157,15 +161,16 @@ export default {
 }
 .button1 {
   background-color:rgb(248, 163, 5);
-  width: 180px;
+  width: 250px;
   color: #000;
   font-size: 12px;
-  padding: 12px 0;
+  padding: 5px 50px;
   border: 0;
   cursor: pointer;
   border-radius: 0;
   outline: none;
-  justify-content: center; 
+  justify-content: center;
+  margin-left: 50%;
 }
 .button1:hover {
   background-color: rgb(223, 190, 102);
