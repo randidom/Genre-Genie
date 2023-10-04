@@ -14,7 +14,7 @@
           </div>
           <div class="button-container">
             <button class="button1" style="margin-top: 10px;" @click="addToFavorites(index)" :class="{ 'remove-favorite': selectedMovies.includes(movie.id) }">
-            {{ selectedMovies.includes(movie.id) ? 'Remove From Favorites' : 'Add to Favorites' }}
+            {{ selectedMovies.includes(movie.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
             </button>
           </div>
         </div>
@@ -36,29 +36,35 @@ export default {
     }
   },
   methods: {
-    recomendations() {
+    recommendations() {
   const userId = this.$store.state.user.id;
+  const recommendedMovies = []; //Empty array to store recommended movies
 
-  //This grabs the genre preferences by the user id
+  // This grabs the genre preferences by the user id
   service.getGenrePreferences(userId).then(response => {
     this.genre = response.data;
 
-    //This grabs the movies based on genre preferences, matching the genre id's associated with that user id
+    // This grabs the movies based on genre preferences, matching the genre id's associated with that user id
     service.getMoviesByGenre(this.genre).then(response => {
       const genreMovies = response.data;
 
-      //Calculate a matching score for each movie
-      //Example if a user picks action + comedy which a movie has, it will show that movie first
-      //Before a movie that just has action or comedy
-
+      // Calculate a matching score for each movie
+      // Example if a user picks action + comedy which a movie has, it will show that movie first
+      // Before a movie that just has action or comedy
       genreMovies.forEach(movie => {
         movie.matchScore = this.calculateMatchScore(movie);
+
+        //Check if the movie is not already recommended before adding it to the list
+        //This will prevent duplicate movies from showing up since one movie can have multiple genre id's
+        //that the user selects
+        if (!recommendedMovies.some(recommendedMovie => recommendedMovie.id === movie.id)) {
+          recommendedMovies.push(movie);
+        }
       });
+      // This will sort the movies by matchScore in descending order, so the most top matching movie(s) appear first
+      recommendedMovies.sort((a, b) => b.matchScore - a.matchScore);
 
-      //This will sort the movies by matchScore in descending order, so the most top matching movie(s) appear first
-      genreMovies.sort((a, b) => b.matchScore - a.matchScore);
-
-      this.movies = genreMovies;
+      this.movies = recommendedMovies;
     });
   });
 },
@@ -131,12 +137,11 @@ if (this.movies.length === 0) {
         console.error("An error occurred", error);
       });
   }
-  }
-
+    }
 },
   
-  created() {
-    this.recomendations();
+ created() {
+    this.recommendations();
   
   },
   name: "AddFavorite",
