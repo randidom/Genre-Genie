@@ -150,8 +150,6 @@ if (this.movies.length === 0) {
 
 <style scoped>
 
-
-
 .container {
   display: flex;
   justify-content: center;

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav" v-if="$store.state.token != ''">
-    
+<img id="genre_genie" src="./assets/genie.png" alt="genie">
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
        <router-link v-bind:to="{ name: 'recommendation' }" v-if="$store.state.token != ''">Recommended</router-link>
       <router-link v-bind:to="{ name: 'search' }" v-if="$store.state.token != ''">Search</router-link>
@@ -43,6 +43,7 @@ p {
 #nav {
   overflow: hidden;
   background-color: #3DCAB1;
+  
 }
 
 #nav a {
@@ -89,5 +90,8 @@ hr {
   }
 }
 
-
+#genre_genie{
+width: 60px;
+margin-left: 10px;
+}
 </style>
