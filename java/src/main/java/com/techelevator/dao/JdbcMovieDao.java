@@ -22,6 +22,8 @@ public class JdbcMovieDao implements MovieDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
+    //This will connect to our database and select all the movies that any user favorited, not specific by userid
     @Override
     public List<Movie> findAllMovies() {
         //Sql statements selects all columns in the movie table to show all movies and their info
@@ -46,30 +48,7 @@ public class JdbcMovieDao implements MovieDao{
         }
 
 
-    @Override
-    public List<Movie> getMoviesByGenre(int genre) {
-        List<Movie> results = new ArrayList<>();
-        //Since the genreID is a foreign key on the movie table, have to join the genre table for where that foreign key/primary key meet to find the name of the genreId
-        //associated with that movie
-        String sql = "SELECT movie.movie_id AS movie_id, title, release_date, overview, vote_average, user_id, is_favorite, poster_path, favorite_id FROM movie " +
-                "JOIN movie_genre ON movie.movie_id = movie_genre.movie_id WHERE movie_genre.genre_id = ?;";
-        try {
-            SqlRowSet queryForRowSet = jdbcTemplate.queryForRowSet(sql, genre);
-            while (queryForRowSet.next()){
-                Movie current = mapMovie(queryForRowSet);
-                results.add(current);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            System.out.println("Database is down.");
-
-        }catch (BadSqlGrammarException e){
-            System.out.println("SQL statement isn't working");
-        }catch (DataIntegrityViolationException e){
-            System.out.println("Issue with primary key or foreign key, or a violation of our constraints.");
-        }
-        return results;
-    }
-
+//This method will search for movies by a specific title in our database (movies added into our database are movies that were favorite(d) by users)
     @Override
     public Movie findMovieByTitle(String title) {
         Movie movie = null;
@@ -93,6 +72,9 @@ public class JdbcMovieDao implements MovieDao{
         return movie;
     }
 
+
+    //This will search the movie by the serial ID implemented in the data table, finding a specific row of it and the columns identified or
+    //associated with that ID
     @Override
     public Movie getMovieById(int id) {
         Movie movie = null;
@@ -117,7 +99,9 @@ public class JdbcMovieDao implements MovieDao{
 
     @Override
     public List<Movie> getFavoriteMovies(int userId) {
-        //This will only select movies if they are favorite(d) by the user\
+        //This will only select movies if they are favorite(d) by the user, which will be all movies considering when that are inserted into our database
+        //is_favorite is automatically set to true, although this method is specific to the user_id. This method is used in our front end
+        // to show the favorite movies by only the user logged in
 
         List<Movie> results = new ArrayList<>();
         String sql = "SELECT movie_id, title, release_date, overview, vote_average, is_favorite, user_id, poster_path, favorite_id FROM movie WHERE is_favorite = true AND user_id = ?;";
@@ -183,6 +167,7 @@ public class JdbcMovieDao implements MovieDao{
     }
 
 
+    //Mapping method to connect the sql columns in our database to the Movie model class and constructor
     private Movie mapMovie(SqlRowSet row){
         Movie movie = new Movie();
         int movieId = row.getInt("movie_id");

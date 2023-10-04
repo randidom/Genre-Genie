@@ -5,7 +5,6 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import Movies from '../components/MoviesComponents.vue'
 import MovieGenre from '../components/MovieSearch.vue'
 import Recommendation from '../views/YourRecommendation.vue'
 import UserPreferences from '../views/UserPreferences'
@@ -26,13 +25,6 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {path: '/movies',
-    name: 'movies',
-    component: Movies,
-    meta: {
-      requiresAuth: true
-    }
-  },
   {path: '/preferences',
     name: 'preferences',
     component: UserPreferences,

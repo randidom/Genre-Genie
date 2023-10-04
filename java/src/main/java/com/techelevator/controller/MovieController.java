@@ -55,6 +55,9 @@ public class MovieController {
         }
     }
 
+    //This method will basically grab movies from the external API with the matching genre_id's associated with each user_id or whatever user is logged in.
+    //This method is a POST considering we are using a genre body, in this case we are using the array of genre id's that can be found of each of the user's
+    //preferences. GenreIds is an array because a user can have multiple genre selections/preferences
     @RequestMapping(path = "/movies/genre/recs", method = RequestMethod.POST)
     public List<Results> getMoviesBySelectedGenre(@Valid @RequestBody Genre genre) {
 
@@ -77,6 +80,8 @@ public class MovieController {
 
     }
 
+    //This method will be implemented in a text box search in the front end, which will allow the user to search movies by title and type in
+    // the desired title they want to search. This method is calling from the external API since it is using restTemplate.exchange
     @RequestMapping(path = "/movies/titles/{title}", method = RequestMethod.GET)
     public List<Results> getMoviesByTitleSearch(@PathVariable String title) {
         List<Results> movies = new ArrayList<>();

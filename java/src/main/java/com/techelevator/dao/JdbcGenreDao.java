@@ -27,6 +27,8 @@ public class JdbcGenreDao implements GenreDao{
 
 
     //This will just get a list from our database of the genre_id's and the name of the genre attached to it
+    //This is not implemented in our front end code or controller class, since there is already an external API link
+    // that shows the list of genres found in our controller found
     @Override
     public List<Genre> getAllGenres() {
         String sql = "SELECT genre_id, genre_name FROM genre;";
@@ -50,7 +52,9 @@ public class JdbcGenreDao implements GenreDao{
     }
 
 
-    //This will get the genre name associated with the id in our database. This method won't really be used unless we want to the id by the name
+    //This will get the genre name associated with the id in our database. This method won't really be used unless we want to the id by the name.
+    //This method is not implemented in the controller class and is just implemented here for testing purposes in our data base and if we want to connect
+    //the genre id associated with the genre name
     @Override
     public Genre getGenreById(int id) {
         Genre genre = null;
