@@ -180,4 +180,36 @@ hr {
   margin-bottom: 50px;
 }
 
+@media (max-width: 768px) {
+  #register {
+    padding: 10px; 
+  }
+  h2 {
+    font-size: 28px;
+    }
+  .form-input-group {
+    margin-bottom: 0.5rem;
+    grid-area: input;
+  width: 60%;
+  }
+  label {
+    margin-right: 0.2rem; 
+  }
+  button {
+    margin-top: 5px; 
+    padding-left: 10px;
+      grid-area: search-button;
+    justify-self: center;
+    width: 60%;
+  }
+  div[role="alert"] {
+    font-size: 14px; 
+  }
+  p{
+    font-size: 14px;
+  }
+
+  
+}
+
 </style>
