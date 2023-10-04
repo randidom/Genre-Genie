@@ -207,7 +207,7 @@ if (this.movies.length === 0) {
   cursor: pointer;
   border-radius: 0;
   outline: none;
-  margin-left: 50%;
+  margin-left: 55%;
 }
 .button1:hover {
   background-color: rgb(223, 190, 102);
