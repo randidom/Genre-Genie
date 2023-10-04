@@ -14,7 +14,7 @@
           </div>
           <div class="button-container">
             <button class="button1" style="margin-top: 10px;" @click="addToFavorites(index)" :class="{ 'remove-favorite': selectedMovies.includes(movie.id) }">
-            {{ selectedMovies.includes(movie.id) ? 'Remove From Favorites' : 'Add to Favorites' }}
+            {{ selectedMovies.includes(movie.id) ? 'Remove from Favorites' : 'Add to Favorites' }}
             </button>
           </div>
         </div>
