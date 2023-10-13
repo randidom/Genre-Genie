@@ -1,4 +1,4 @@
-\# Genre-Genie
+# Genre-Genie
 This is a full-stack movie recommendation web application that leverages an external API to provide users with personalized movie recommendations. The application is designed using object-oriented principles and offers a range of features, including user registration, login, genre preference selection, movie recommendation, favorites management, and movie search by title.
 
 
