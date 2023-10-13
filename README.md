@@ -27,7 +27,7 @@ Favorites Management: Add and remove movies from your favorites list.
 
 Movie Search: Search for movies by title to find specific films.
 
-## Getting Started
+# Getting Started
 
 To run the frontend of this application, you need to install the required dependencies. Follow these steps:
 
